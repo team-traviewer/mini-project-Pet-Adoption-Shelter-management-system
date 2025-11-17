@@ -54,6 +54,7 @@ CREATE TABLE shelters (
 
 CREATE TABLE animals (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(30) NULL DEFAULT 'TBD',
   shelter_id BIGINT NOT NULL,
   species VARCHAR(30) NOT NULL,               -- DOG/CAT/OTHER
   breed VARCHAR(60) NULL,
