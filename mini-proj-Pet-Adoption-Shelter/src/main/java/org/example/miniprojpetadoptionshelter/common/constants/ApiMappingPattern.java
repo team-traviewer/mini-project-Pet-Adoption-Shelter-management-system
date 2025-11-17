@@ -41,4 +41,42 @@ public class ApiMappingPattern {
         public static final String ADD_ROLE=  "/users/{userId}/roles";
         public static final String REMOVE_ROLE=  "/users/{userId}/roles/{rolesName}";
     }
+
+    public static final class Shelters {
+        private Shelters () {}
+
+        public static final String ROOT = BASE + "/shelters";
+        public static final String ID_ONLY = "/{shelterId}";
+        public static final String BY_ID = ROOT + ID_ONLY;
+    }
+
+    public static final class Animals {
+        private Animals () {}
+
+        public static final String ROOT = BASE + "/animals";
+        public static final String ID_ONLY = "/{animalId}";
+        public static final String BY_ID = ROOT + ID_ONLY;
+        public static final String HISTORY = BY_ID + "/history";
+    }
+
+
+    public static final class Adoptions {
+        private Adoptions () {}
+
+        public static final String ROOT = BASE + "/adoptions";
+        public static final String ID_ONLY = "/{adoptionId}";
+        public static final String BY_ID = ROOT + ID_ONLY;
+    }
+
+    public static final class Applications {
+        private Applications () {}
+
+        public static final String ROOT = BASE + "/applications";
+        public static final String ID_ONLY = "/{applicationsId}";
+        public static final String BY_ID = ROOT + ID_ONLY;
+        public static final String REVIEW = BY_ID + "/review";
+        public static final String APPROVE = BY_ID + "/approve";
+        public static final String REJECT = BY_ID + "/reject";
+        public static final String CANCEL = BY_ID + "/cancel";
+    }
 }
