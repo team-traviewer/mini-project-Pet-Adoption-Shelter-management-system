@@ -78,5 +78,66 @@ public class ApiMappingPattern {
         public static final String APPROVE = BY_ID + "/approve";
         public static final String REJECT = BY_ID + "/reject";
         public static final String CANCEL = BY_ID + "/cancel";
+
+    }
+    // Intake (입소 기록)
+    public static final class Intake {
+        private Intake() {}
+
+        public static final String ROOT = BASE + "/intakes";
+
+        public static final String CREATE_FOR_ANIMAL = BASE + "/animals/{animalId}";
+        public static final String LIST_BY_ANIMAL = BASE + "/animals/{animalId}/intakes";
+
+        public static String DETAIL = ROOT + "/{id}";
+        public static String UPDEATE = ROOT + "{id}";
+    }
+    // Foster (임시 보호)
+    public static final class Foster {
+        private Foster() {}
+
+        public static final String ROOT = BASE + "/foster";
+
+        public static final String CREATE = ROOT;
+
+        public static final String LIST = ROOT;
+
+        public static final String DETATL = ROOT + "/{id}";
+
+        public static final String CLOSE = ROOT + "/{id}/close";
+
+        public static final String CANCEL = ROOT + "/{id}cancel";
+
+    }
+    // Medical (의료 목록)
+    public static final class Medical {
+        private Medical() {}
+        public static final String ROOT = BASE + "/Medical";
+
+        public static final String CREATE_FOR_ANIMAL = BASE + "/animals/{animalId}/medical";
+        public static final String LIST_BY_ANIMAL = BASE + "/animals/{animalId}/medical";
+
+        public static final String DETAIL = ROOT + "/{id}";
+
+        public static final String UPDATE = ROOT + "/{id}";
+
+    }
+    // Dashboard (대시보드)
+    public static final class Dashboard {
+        private Dashboard() {}
+
+        private static final String ROOT = BASE + "/shelters/{shelterId}/dashboard";
+    }
+    // Reports (리포트)
+    public static class Reports {
+        private Reports() {}
+
+        public static final String ROOT = BASE + "/reports";
+
+        public static final String ANIMALS = ROOT + "/animals";
+
+        public static final String APPLICATIONS = ROOT + "/applications";
+
+        public static final String ADOPTIONS = ROOT + "/adoptions";
     }
 }
