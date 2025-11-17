@@ -84,42 +84,46 @@ public class ApiMappingPattern {
     public static final class Intake {
         private Intake() {}
 
-        public static final String ROOT = BASE + "/intakes";
 
-        public static final String CREATE_FOR_ANIMAL = BASE + "/animals/{animalId}";
+        public static final String ROOT = BASE + "/intakes";
+        public static final String ID_ONLY = "/{intakeId}";
+        public static final String BY_ID = ROOT + ID_ONLY;
+
+        public static final String CREATE_FOR_ANIMAL = BASE + "/animals/{animalId}/intakes";
         public static final String LIST_BY_ANIMAL = BASE + "/animals/{animalId}/intakes";
 
-        public static String DETAIL = ROOT + "/{id}";
-        public static String UPDEATE = ROOT + "{id}";
+        public static final String DETAIL = BY_ID + "/detail";
+        public static final String UPDATE = BY_ID + "/update";
     }
     // Foster (임시 보호)
     public static final class Foster {
         private Foster() {}
 
         public static final String ROOT = BASE + "/foster";
+        public static final String ID_ONLY = "/{fosterId}";
+        public static final String BY_ID = ROOT + ID_ONLY;
 
         public static final String CREATE = ROOT;
-
         public static final String LIST = ROOT;
 
-        public static final String DETATL = ROOT + "/{id}";
-
-        public static final String CLOSE = ROOT + "/{id}/close";
-
-        public static final String CANCEL = ROOT + "/{id}cancel";
+        public static final String DETAIL = BY_ID + "/detail";
+        public static final String CLOSE = BY_ID + "/close";
+        public static final String CANCEL = BY_ID + "/cancel";
 
     }
     // Medical (의료 목록)
     public static final class Medical {
         private Medical() {}
-        public static final String ROOT = BASE + "/Medical";
+
+        public static final String ROOT = BASE + "/medical";
+        public static final String ID_ONLY = "/{medicalId}";
+        public static final String BY_ID = ROOT + ID_ONLY;
 
         public static final String CREATE_FOR_ANIMAL = BASE + "/animals/{animalId}/medical";
         public static final String LIST_BY_ANIMAL = BASE + "/animals/{animalId}/medical";
 
-        public static final String DETAIL = ROOT + "/{id}";
-
-        public static final String UPDATE = ROOT + "/{id}";
+        public static final String DETAIL = BY_ID + "/detail";
+        public static final String UPDATE = BY_ID + "/update";
 
     }
     // Dashboard (대시보드)
@@ -135,9 +139,8 @@ public class ApiMappingPattern {
         public static final String ROOT = BASE + "/reports";
 
         public static final String ANIMALS = ROOT + "/animals";
-
         public static final String APPLICATIONS = ROOT + "/applications";
-
         public static final String ADOPTIONS = ROOT + "/adoptions";
-    }
+        }
+
 }
