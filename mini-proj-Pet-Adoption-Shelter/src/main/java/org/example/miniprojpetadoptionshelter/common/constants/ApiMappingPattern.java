@@ -97,17 +97,18 @@ public class ApiMappingPattern {
         public static final String UPDATE = BY_ID + "/update";
     }
 
-    public static final class Applications {
-        private Applications () {}
-
-        public static final String ROOT = BASE + "/applications";
-        public static final String ID_ONLY = "/{applicationsId}";
-        public static final String BY_ID = ROOT + ID_ONLY;
-        public static final String REVIEW = BY_ID + "/review";
-        public static final String APPROVE = BY_ID + "/approve";
-        public static final String REJECT = BY_ID + "/reject";
-        public static final String CANCEL = BY_ID + "/cancel";
-    }
+    /** 이동 완료 */
+//    public static final class Applications {
+//        private Applications () {}
+//
+//        public static final String ROOT = BASE + "/applications";
+//        public static final String ID_ONLY = "/{applicationsId}";
+//        public static final String BY_ID = ROOT + ID_ONLY;
+//        public static final String REVIEW = BY_ID + "/review";
+//        public static final String APPROVE = BY_ID + "/approve";
+//        public static final String REJECT = BY_ID + "/reject";
+//        public static final String CANCEL = BY_ID + "/cancel";
+//    }
 
     public static final class Adoptions {
         private Adoptions () {}

@@ -1,6 +1,6 @@
 import { BASE } from "../common/base.path";
 
-const SHELTER_PREFIX = `${BASE}/shelters`;
+export const SHELTER_PREFIX = `${BASE}/shelters`;
 
 export const SHELTER_PATH = {
   ROOT: SHELTER_PREFIX,
