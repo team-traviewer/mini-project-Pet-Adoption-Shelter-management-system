@@ -9,7 +9,6 @@ export const AUTH_PATH = {
   LOGOUT: `${AUTH_PREFIX}/logout`,
   REFRESH: `${AUTH_PREFIX}/refresh`,
   PASSWORD_RESET: `${AUTH_PREFIX}/password/reset`,
-  PASSWORD_VERIFY: `${AUTH_PREFIX}/password/verify`,
+  VERIFY: `${AUTH_PREFIX}/verify`,
   EMAIL_SEND: `${AUTH_PREFIX}/email/send`,
-  EMAIL_VERIFY: `${AUTH_PREFIX}/email/verify`
 }
