@@ -4,7 +4,6 @@ const AUTH_PREFIX = `${BASE}/auth`;
 
 export const AUTH_PATH = {
   ROOT: AUTH_PREFIX,
-
   SIGNUP: `${AUTH_PREFIX}/signup`,
   LOGIN: `${AUTH_PREFIX}/login`,
   LOGOUT: `${AUTH_PREFIX}/logout`,
