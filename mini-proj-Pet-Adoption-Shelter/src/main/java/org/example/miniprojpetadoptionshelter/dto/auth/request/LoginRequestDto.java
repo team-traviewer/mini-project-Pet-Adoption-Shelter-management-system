@@ -8,5 +8,6 @@ public record LoginRequestDto(
 
         @NotBlank(message = "password 값은 필수 입니다.")
         String password
+        
 ) {
 }
