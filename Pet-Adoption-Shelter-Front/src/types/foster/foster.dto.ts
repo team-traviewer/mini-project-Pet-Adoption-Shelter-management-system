@@ -1,4 +1,6 @@
-export interface CreateFosterReq{
+import type { Status } from "@/apis/foster/foster.path";
+
+export interface FosterCreateReq{
   animalId: number;
   fosterUserId: number;
   startDate: string;
@@ -29,8 +31,4 @@ status:	String;
 note:	string;
 createdAt:	string;
 message:	string
-}
-
-export interface FosterUpdateReq {
-  status: 'ACTIVE'|'CLOSED'|'CANCELED';
 }
