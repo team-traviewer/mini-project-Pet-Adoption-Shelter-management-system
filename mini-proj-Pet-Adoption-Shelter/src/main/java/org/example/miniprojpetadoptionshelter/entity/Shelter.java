@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.example.miniprojpetadoptionshelter.entity.base.BaseTimeEntity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +24,9 @@ public class Shelter extends BaseTimeEntity {
 
     private String address;
 
-    private Double latitude;
+    private BigDecimal latitude;
 
-    private Double longitude;
+    private BigDecimal longitude;
 
     private String phone;
 
@@ -41,14 +42,14 @@ public class Shelter extends BaseTimeEntity {
         this.phone = phone;
     }
 
-    public void changeLocation(Double latitude, Double longitude) {
+    public void changeLocation(BigDecimal latitude, BigDecimal longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
 
     @Builder
-    public Shelter(String name, String address, Double latitude, Double longitude, String phone, FileInfo shelterImgFile) {
+    public Shelter(String name, String address, BigDecimal latitude, BigDecimal longitude, String phone, FileInfo shelterImgFile) {
         this.name = name;
         this.address = address;
         this.latitude = latitude;

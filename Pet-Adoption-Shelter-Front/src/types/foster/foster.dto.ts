@@ -1,10 +1,12 @@
-export interface CreateFosterReq{
+import type { Status } from "@/apis/foster/foster.path";
+
+export interface FosterCreateReq{
   animalId: number;
   fosterUserId: number;
   startDate: string;
   endDate?: string;
-  status: 'ACTIVE'|'CLOSED'|'CANCELED';
-  // enum은 이렇게 넣음
+  status: Status;
+  // PATH 쪽에  export type Status = 'ACTIVE'|'CLOSED'|'CANCELED'; 선언 되어있음.
   note?: string;
 }
 
@@ -29,8 +31,4 @@ status:	String;
 note:	string;
 createdAt:	string;
 message:	string
-}
-
-export interface FosterUpdateReq {
-  status: 'ACTIVE'|'CLOSED'|'CANCELED';
 }

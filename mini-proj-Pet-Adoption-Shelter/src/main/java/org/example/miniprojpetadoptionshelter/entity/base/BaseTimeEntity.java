@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public abstract class BaseTimeEntity {
 
     @CreatedDate
+
     @Column(name = "created_at", nullable = false, updatable = false,
             columnDefinition = "DATETIME(6)")
     private LocalDateTime createdAt;
@@ -25,3 +26,4 @@ public abstract class BaseTimeEntity {
             columnDefinition = "DATETIME(6)")
     private LocalDateTime updatedAt;
 }
+

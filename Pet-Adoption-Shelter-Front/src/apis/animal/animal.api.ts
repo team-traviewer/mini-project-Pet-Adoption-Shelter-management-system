@@ -3,27 +3,30 @@ import { privateApi, publicApi } from "../common/axiosInstance"
 import { ANIMAL_PATH } from "./animal.path"
 import type { AnimalListResponse, AnimalCreateReq, AnimalDetailDto,  AnimalUpdateReq } from "@/types/animal/animal.dto";
 import { FILE_PATH } from "../file/file.path";
+import { data } from "react-router-dom";
 
 export const AnimalApi = {
-  // 등록 -> 이미지 등록
-  createAnimalInfo: async (req: AnimalCreateReq) : Promise<void> => {
-    const res = await privateApi.post<ApiResponse<void>>(
-      ANIMAL_PATH.ROOT, req
-    );
-    return res.data.data;
-  },
+  createAnimalInfo: async (req: AnimalCreateReq) : Promise<ApiResponse<void>> => {
+    // const formData = new FormData;
 
-  uploadAnimalImg: async (animalId: number, formData: FormData) => {
-    const res = await privateApi.post<void>(
-      FILE_PATH.FILES_BY_ANIMAL(animalId), formData,
-      {headers: {"Content-Type": "multipart/form-data"}}
-    );
+    // formData.append(
+    //   "request", new Blob([JSON.stringify(req)], {type: "application/json"})
+    // );
+
+    // if (req.files && req.files.length > 0) {
+    //   req.files.forEach(file => formData.append("files", file))
+    // }
+    const res = await privateApi.post<ApiResponse<void>>(
+      ANIMAL_PATH.ROOT, req, {headers: {"Content-Type": "multipart/form-data"}}
+    ); 
+      
     return res.data;
   },
 
+
   // 조회
   getAnimalList: async () => {
-    const res = await publicApi.get<AnimalListResponse> (
+    const res = await publicApi.get<ApiResponse<AnimalListResponse>> (
       ANIMAL_PATH.ROOT
     );
     return res.data;
@@ -31,26 +34,30 @@ export const AnimalApi = {
 
   // 상세 조회
   getAnimalDetail: async (animalId: number) => {
-    const res = await publicApi.get<AnimalDetailDto> (
+    const res = await publicApi.get<ApiResponse<AnimalDetailDto>> (
       ANIMAL_PATH.BY_ID(animalId)
     );
     return res.data;
   },
 
   // 수정
-  updateAnimalInfo: async (animalId: number, req: AnimalUpdateReq) => {
-    const res = await privateApi.put<void>(
-      ANIMAL_PATH.BY_ID(animalId), req
-    );
-    return res.data;
-  },
+  updateAnimalInfo: async (animalId: number, req: AnimalUpdateReq): Promise<ApiResponse<void>> => {
+    // const formData = new FormData();
 
-  updateAnimalImg: async (animalId: number, formData: FormData) => {
-    const res = await privateApi.put<void>(
-      FILE_PATH.FILES_BY_ANIMAL(animalId), formData,
-      {headers: {"Content-Type": 'multipart/form-data'}}
-    );
-    return res.data;
+    // formData.append(
+    //   "request",
+    //   new Blob([JSON.stringify(req)], {type: "application/json"})
+    // )
+
+    // if(req.files && req.files.length > 0) {
+    //   req.files.forEach(file => formData.append("files", file))
+    // }
+
+    const res = await privateApi.put<ApiResponse<void>>(
+        ANIMAL_PATH.BY_ID(animalId), req,
+        {headers : { "Content-Type" : "multipart/form-data"}}
+      );
+      return res.data;
   },
 
 
