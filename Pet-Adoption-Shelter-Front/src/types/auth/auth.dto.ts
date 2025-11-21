@@ -18,6 +18,7 @@ export interface LoginReq {
 
 export interface LoginRes {
   accessToken: string;
+  refreshToken: string;
   expireTime: number;
 }
 

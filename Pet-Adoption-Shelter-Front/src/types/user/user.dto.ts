@@ -11,9 +11,4 @@ export interface UpdateMyProfileRequest {
   phone: string;
 }
 
-export interface UpdateMyProfileResponse {
-  name: string;
-  email: string;
-  phone: string;
-}
 
