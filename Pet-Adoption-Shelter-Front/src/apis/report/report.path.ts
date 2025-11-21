@@ -1,6 +1,6 @@
 // report.path.ts
 
-import { BASE } from "../apis/common/base.path";
+import { BASE } from "../common/base.path";
 
 export const REPORT_PREFIX = `${BASE}/reports`;
 export const SHELTER_PREFIX = `${BASE}/shelters`;
