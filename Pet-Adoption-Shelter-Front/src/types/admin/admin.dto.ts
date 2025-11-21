@@ -1,12 +1,12 @@
-export interface VeiwAllUsersDto {
+export interface UserListDto {
   loginId: string;
   name: string;
   createdAt: string;
 }
 
-export type VeiwAllUsersResponse = VeiwAllUsersDto[];
+export type UserListResponse = UserListDto[];
 
-export interface ViewUserProfile {
+export interface UserProfileResponse {
   loginId: string;
   name: string;
   email: string;

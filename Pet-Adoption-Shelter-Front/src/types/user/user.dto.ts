@@ -10,5 +10,3 @@ export interface UpdateMyProfileRequest {
   email: string;
   phone: string;
 }
-
-

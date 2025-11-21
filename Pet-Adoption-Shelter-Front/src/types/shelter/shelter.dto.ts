@@ -4,6 +4,7 @@ export interface CreateShelterReq {
   latitude?: number;
   longitude?:number;
   phone: string;
+  files?: File[];
 }
 
 export interface ShelterListDto {
@@ -20,6 +21,7 @@ export interface ShelterDetailResponse {
   latitude?: number;
   longitude?:number;
   phone: string;
+  files?: File[];
 }
 
 export interface ShelterUpdateReq {
@@ -28,6 +30,7 @@ export interface ShelterUpdateReq {
   latitude?: number;
   longitude?:number;
   phone: string;
+  files?: File[];
 }
 
 export interface ShelterFileUpdateReq {
