@@ -5,6 +5,8 @@ import type {
   ApplicationCreateReq,
   ApplicationListRes,
   ApplicationUpdateReq,
+  ApplicationRejectReq,
+  ApplicationCancelReq,
 } from "@/types/application/application.dto";
 import { privateApi } from "../common/axiosInstance";
 import { APPLICATION_PATH } from "./application.path";
@@ -28,24 +30,39 @@ export const applicationApi = {
     );
     return res.data.data;
   },
+
   // 입양 신청 상세 조회
-  getApplicationDetail: async (
-    applicationId: number
-  ): Promise<ApplicationDetailRes> => {
+  getApplicationDetail: async (applicationId: number): Promise<ApplicationDetailRes> => {
     const res = await privateApi.get<ApiResponse<ApplicationDetailRes>>(
       APPLICATION_PATH.BY_ID(applicationId)
     );
     return res.data.data;
   },
 
-  // 입양 신청 심사 상태 수정
-  updateApplicationStatus: async (
-    req: ApplicationUpdateReq,
-    applicationId: number,
-    status: ApplicationStatus
-  ): Promise<void> => {
+  // 입양 신청 interviewAt / homeCheck 수정
+  updateApplicationStatus: async (applicationId: number, status: ApplicationStatus, req: ApplicationUpdateReq): Promise<void> => {
     const res = await privateApi.put<ApiResponse<void>>(
-      APPLICATION_PATH.STATUS(applicationId, status, req)
+      APPLICATION_PATH.STATUS(applicationId, status),
+      req
+    );
+    return res.data.data;
+  },
+
+  // 입양 신청 거절
+  rejectApplications: async (applicationId: number, status: ApplicationStatus, req: ApplicationRejectReq): Promise<void> => {
+    const res = await privateApi.put<ApiResponse<void>>(
+      APPLICATION_PATH.STATUS(applicationId, status),
+      req
+    );
+    return res.data.data;
+  },
+
+
+  // 입양 신청 취소
+  cancelApplications: async (applicationId: number, status: ApplicationStatus, req: ApplicationCancelReq): Promise<void> => {
+    const res = await privateApi.put<ApiResponse<void>>(
+      APPLICATION_PATH.STATUS(applicationId, status),
+      req
     );
     return res.data.data;
   },
