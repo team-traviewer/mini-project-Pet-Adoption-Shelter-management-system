@@ -1,4 +1,4 @@
-export interface CreateIntakeReq {
+export interface IntakeCreateReq {
   animalId: number;
   intakeDate: string;
   intakeReason: string;

@@ -5,25 +5,34 @@ import type { AnimalListResponse, AnimalCreateReq, AnimalDetailDto,  AnimalUpdat
 import { FILE_PATH } from "../file/file.path";
 
 export const AnimalApi = {
-  // 등록 -> 이미지 등록
-  createAnimalInfo: async (req: AnimalCreateReq) : Promise<void> => {
-    const res = await privateApi.post<ApiResponse<void>>(
-      ANIMAL_PATH.ROOT, req
-    );
-    return res.data.data;
+  createAnimalInfo: async (req: AnimalCreateReq) : Promise<string> => {
+    // const formData = new FormData;
+
+    // formData.append(
+    //   "request", new Blob([JSON.stringify(req)], {type: "application/json"})
+    // );
+
+    // if (req.files && req.files.length > 0) {
+    //   req.files.forEach(file => formData.append("files", file))
+    // }
+
+    try {
+      await privateApi.post<void>(
+        ANIMAL_PATH.ROOT, req, {headers: {"Content-Type": "multipart/form-data"}}
+      ); 
+      
+      return "성공";
+    } catch (error) {
+      console.error(error);
+      return "실패";
+    }
+    
   },
 
-  uploadAnimalImg: async (animalId: number, formData: FormData) => {
-    const res = await privateApi.post<void>(
-      FILE_PATH.FILES_BY_ANIMAL(animalId), formData,
-      {headers: {"Content-Type": "multipart/form-data"}}
-    );
-    return res.data;
-  },
 
   // 조회
   getAnimalList: async () => {
-    const res = await publicApi.get<AnimalListResponse> (
+    const res = await publicApi.get<ApiResponse<AnimalListResponse>> (
       ANIMAL_PATH.ROOT
     );
     return res.data;
@@ -31,26 +40,35 @@ export const AnimalApi = {
 
   // 상세 조회
   getAnimalDetail: async (animalId: number) => {
-    const res = await publicApi.get<AnimalDetailDto> (
+    const res = await publicApi.get<ApiResponse<AnimalDetailDto>> (
       ANIMAL_PATH.BY_ID(animalId)
     );
     return res.data;
   },
 
   // 수정
-  updateAnimalInfo: async (animalId: number, req: AnimalUpdateReq) => {
-    const res = await privateApi.put<void>(
-      ANIMAL_PATH.BY_ID(animalId), req
-    );
-    return res.data;
-  },
+  updateAnimalInfo: async (animalId: number, req: AnimalUpdateReq): Promise<string> => {
+    // const formData = new FormData();
 
-  updateAnimalImg: async (animalId: number, formData: FormData) => {
-    const res = await privateApi.put<void>(
-      FILE_PATH.FILES_BY_ANIMAL(animalId), formData,
-      {headers: {"Content-Type": 'multipart/form-data'}}
-    );
-    return res.data;
+    // formData.append(
+    //   "request",
+    //   new Blob([JSON.stringify(req)], {type: "application/json"})
+    // )
+
+    // if(req.files && req.files.length > 0) {
+    //   req.files.forEach(file => formData.append("files", file))
+    // }
+
+    try {
+      await privateApi.put<ApiResponse<void>>(
+        ANIMAL_PATH.BY_ID(animalId), req,
+        {headers : { "Content-Type" : "multipart/form-data"}}
+      );
+      return "성공";
+    } catch (error) {
+      console.error(error);
+      return "실패";
+    }
   },
 
 

@@ -37,4 +37,8 @@ public class AnimalFile {
         this.fileInfo = fileInfo;
         this.displayOrder = displayOrder != null ? displayOrder : 0;
     }
+
+    public void setAnimal(Animal animal) {
+
+    }
 }
