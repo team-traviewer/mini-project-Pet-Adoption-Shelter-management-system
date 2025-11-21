@@ -1,4 +1,4 @@
-import { privateApi } from "../apis/common/axiosInstance";
+import { privateApi } from "../common/axiosInstance";
 import type { ApiResponse } from "@/types/common/ApiResponse";
 
 import type {
@@ -6,7 +6,7 @@ import type {
   AnimalStatusReportDto,
   ApplicationReportDto,
   AdoptionReportDto,
-} from "@/report/report.dto";
+} from "@/apis/report/report.dto";
 
 import { REPORT_PATH } from "./report.path";
 
