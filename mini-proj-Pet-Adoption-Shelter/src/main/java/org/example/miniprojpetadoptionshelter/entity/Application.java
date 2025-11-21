@@ -35,13 +35,13 @@ public class Application extends BaseTimeEntity {
     /** FK */
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "animal_id", nullable = false, foreignKey = @ForeignKey(name = "fk_applications_animal"))
+    @JoinColumn(name = "animal_id", nullable = false, foreignKey = @ForeignKey(name = "fk_applications_animals"))
     private Animal animal;
 
     /** FK */
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "applicant_id", nullable = false, foreignKey = @ForeignKey(name = "fk_applications_user"))
+    @JoinColumn(name = "applicant_id", nullable = false, foreignKey = @ForeignKey(name = "fk_applications_users"))
     private User user;
 
     /** 심사 상태 */
@@ -64,8 +64,8 @@ public class Application extends BaseTimeEntity {
     private String message;
 
     /** 거절 이유 */
-    @Column(name = "reason", nullable = false)
-    private String reason;
+    @Column(name = "reason", length = 100)
+    private String reason; // 기본값 null
 
     /** 입양 신청 시 생성자*/
     @Builder
@@ -75,56 +75,30 @@ public class Application extends BaseTimeEntity {
         this.message = message;
     }
 
-    /** APPLIED -> CANCEL 상태 변경 */
+    /** APPLIED -> CANCEL 변경 */
     public void cancel(String reason) {
-        if(status != ApplicationStatus.APPLIED) {
-            throw new IllegalStateException(
-                    "APPLIED 상태에서만 CANCELED 로 변경 가능!" + this.status
-            );
-        }
-        this.reason = reason;
         this.status = ApplicationStatus.CANCELED;
+        this.reason = reason;
     }
 
-    /** APPLIED -> REVIEW 상태 변경 */
-    // 서비스에서 검증하면 규칙이 샐수도있음. 도메인에 예외처리
+    /** APPLIED -> REVIEW 변경 */
     public void startReview(){
-        if(status != ApplicationStatus.APPLIED) {
-            throw new IllegalStateException(
-                    "APPLIED 상태에서만 REVIEW 로 변경 가능!" + this.status
-            );
-        }
         this.status = ApplicationStatus.REVIEW;
     }
 
     /** REVIEW 일 때만 정보 수정 변경 */
     public void updateApplicationInfo(LocalDate interviewAt, boolean homeCheck) {
-        if (this.status != ApplicationStatus.REVIEW) {
-            throw new IllegalStateException(
-                    "REVIEW 상태에서만 면담일정과 가정방문 여부 수정 가능!" + this.status
-            );
-        }
         this.interviewAt = interviewAt;
         this.homeCheck = homeCheck;
     }
 
-    /** REVIEW -> APPROVED */
+    /** REVIEW -> APPROVED 변경*/
     public void approve() {
-        if(this.status != ApplicationStatus.REVIEW) {
-            throw new IllegalStateException(
-                    "REVIEW 상태에서만 (승인) APPROVE 가능!" + this.status
-            );
-        }
         this.status = ApplicationStatus.APPROVED;
     }
 
-    /** REVIEW -> REJECTED */
+    /** REVIEW -> REJECTED 변경*/
     public void reject(String reason) {
-        if(this.status != ApplicationStatus.REVIEW) {
-            throw new IllegalStateException(
-                    "REVIEW 상태에서만 (거절) REJECT 가능!" + this.status
-            );
-        }
         this.status = ApplicationStatus.REJECTED;
         this.reason = reason;
     }
