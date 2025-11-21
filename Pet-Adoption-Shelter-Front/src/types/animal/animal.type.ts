@@ -1,0 +1,1 @@
+export type species = 'DOG' | 'CAT' | 'OTHER';
