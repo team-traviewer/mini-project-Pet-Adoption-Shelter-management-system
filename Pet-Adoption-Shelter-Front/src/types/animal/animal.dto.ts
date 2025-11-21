@@ -7,6 +7,7 @@ export interface AnimalCreateReq {
   weightKg?: number;
   temperament?: string;
   status: string;
+  File: [];
 }
 
 export interface AnimalListDto {
@@ -36,7 +37,7 @@ export interface AnimalDetailDto {
   weightKg?: number;
   temperament?: string;
   status: string;
-
+  File: [];
 }
 
 export interface AnimalUpdateReq {

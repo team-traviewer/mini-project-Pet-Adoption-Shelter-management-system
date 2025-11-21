@@ -14,7 +14,7 @@ export const AnimalApi = {
   },
 
   uploadAnimalImg: async (animalId: number, formData: FormData) => {
-    const res = await privateApi.post<void>(
+    const res = await privateApi.post<ApiResponse<void>>(
       FILE_PATH.FILES_BY_ANIMAL(animalId), formData,
       {headers: {"Content-Type": "multipart/form-data"}}
     );
@@ -23,7 +23,7 @@ export const AnimalApi = {
 
   // 조회
   getAnimalList: async () => {
-    const res = await publicApi.get<AnimalListResponse> (
+    const res = await publicApi.get<ApiResponse<AnimalListResponse>> (
       ANIMAL_PATH.ROOT
     );
     return res.data;
