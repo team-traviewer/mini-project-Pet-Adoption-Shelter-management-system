@@ -5,8 +5,8 @@ export interface FosterCreateReq{
   fosterUserId: number;
   startDate: string;
   endDate?: string;
-  status: 'ACTIVE'|'CLOSED'|'CANCELED';
-  // enum은 이렇게 넣음
+  status: Status;
+  // PATH 쪽에  export type Status = 'ACTIVE'|'CLOSED'|'CANCELED'; 선언 되어있음.
   note?: string;
 }
 
