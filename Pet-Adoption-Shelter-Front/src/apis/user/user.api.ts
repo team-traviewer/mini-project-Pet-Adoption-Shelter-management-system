@@ -11,5 +11,4 @@ export const userApi = {
   updateMyProfile: async (req: UpdateMyProfileRequest) => {
     await privateApi.put<void>(USER_PATH.ME, req);
   },
-
 }
