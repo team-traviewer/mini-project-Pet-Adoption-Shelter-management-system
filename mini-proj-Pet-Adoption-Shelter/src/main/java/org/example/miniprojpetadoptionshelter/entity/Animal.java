@@ -14,6 +14,7 @@ import java.util.List;
                 @Index(name = "idx_animals_species", columnList = "species, breed")
         })
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Animal extends BaseTimeEntity {
 

@@ -1,4 +1,7 @@
 package org.example.miniprojpetadoptionshelter.dto.animal;
 
-public enum AnimalCreateReq {
+public record AnimalCreateReq(
+
+) {
+
 }
