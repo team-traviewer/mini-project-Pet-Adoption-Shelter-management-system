@@ -1,0 +1,18 @@
+package org.example.miniprojpetadoptionshelter.dto.admin.response;
+
+import org.example.miniprojpetadoptionshelter.common.enums.RoleType;
+import org.example.miniprojpetadoptionshelter.entity.User;
+
+import java.util.List;
+
+public record RoleListResponse(
+        Long userId,
+        List<RoleType> roles
+) {
+    public RoleListResponse from(User user) {
+        return new RoleListResponse(
+                user.getId(),
+                user.getAllRoles().stream().toList()
+        );
+    }
+}
