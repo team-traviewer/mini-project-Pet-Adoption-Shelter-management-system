@@ -34,12 +34,36 @@ CREATE TABLE roles (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE user_roles (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
   user_id BIGINT NOT NULL,
   role_name VARCHAR(30) NOT NULL,
-  PRIMARY KEY(user_id, role_name),
+  
+  UNIQUE KEY `uk_user_roles_user_id_role_name` (user_id, role_name),
+    INDEX `idx_user_roles_user_id` (user_id),
+    INDEX `idx_user_roles_role_name` (role_name),
+    
   CONSTRAINT `fk_user_roles_user` FOREIGN KEY (user_id) REFERENCES users(id),
   CONSTRAINT `fk_user_roles_role` FOREIGN KEY (role_name) REFERENCES roles(role_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+# === REFRESH TOKENS (1:1 관계) === #
+CREATE TABLE refresh_tokens (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL UNIQUE COMMENT '사용자 ID',
+    token VARCHAR(350) NOT NULL COMMENT '리프레시 토큰 값',
+    expiry DATETIME(6) NOT NULL COMMENT '만료 시간',
+    
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+    
+    INDEX `idx_refresh_token_user_id` (user_id),
+    
+    CONSTRAINT `fk_refresh_token_user` FOREIGN KEY (user_id) REFERENCES users(id)
+)	
+	ENGINE=InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COLLATE = utf8mb4_unicode_ci
+    COMMENT = '리프레시 토큰 저장 테이블';
 
 -- 보호소/동물
 CREATE TABLE shelters (

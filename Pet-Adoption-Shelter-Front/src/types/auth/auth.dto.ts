@@ -1,52 +1,47 @@
-export interface SignUpReq {
+export interface SignUpRequest {
   loginId: string;
   password: string;
   confirmPassword: string;
   name: string;
   email: string;
-  phone?: string;
+  phone: string;
 }
 
-export interface SignUpRes {
-  message: string;
+export interface SignUpResponse {
+  loginId: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  email: string;
+  phone: string;
 }
 
-export interface LoginReq {
+export interface LoginRequest {
   loginId: string;
   password: string;
 }
 
-export interface LoginRes {
+export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
   expireTime: number;
 }
 
-export interface LogoutRes {
-  message: string;
-}
-
-export interface RefreshReq {
+export interface LogoutRequest {
   refreshToken: string;
 }
 
-export interface PasswordResetReq {
-  loginId: string;
+export interface RefreshRequest {
+  refreshToken: string;
+}
+
+export interface PasswordResetRequest {
+  token: string;
   newPassword: string;
   confirmNewPassword: string;
 }
 
-export interface PasswordResetRes {
-  refreshToken: string;
-}
-
-
-export interface VerifyReq {
-  token: string;
-}
-
-
-export interface EmailSendReq {
+export interface PasswordVerifyResponse {
+  valid: boolean;
   email: string;
 }
-
