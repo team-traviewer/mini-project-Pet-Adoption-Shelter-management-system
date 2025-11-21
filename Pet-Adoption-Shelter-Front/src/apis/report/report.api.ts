@@ -6,7 +6,7 @@ import type {
   AnimalStatusReportDto,
   ApplicationReportDto,
   AdoptionReportDto,
-} from "@/apis/report/report.dto";
+} from "@/types/report/report.dto";
 
 import { REPORT_PATH } from "./report.path";
 
