@@ -1,4 +1,4 @@
-export interface CreateMedicalReq {
+export interface MedicalCreateReq {
   animalId: number;
   recordDate: string;        
   type: 'VACCINE' | 'NEUTER' | 'TREATMENT' | 'EXAM';
@@ -25,7 +25,7 @@ export interface MedicalDetailResponse {
   createdAt: string;
 }
 
-export interface UpdateMedicalReq {
+export interface MedicalUpdateReq {
   recordDate?: string;
   type?: 'VACCINE' | 'NEUTER' | 'TREATMENT' | 'EXAM';
   description?: string;
