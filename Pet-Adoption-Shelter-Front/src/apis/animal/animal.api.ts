@@ -3,9 +3,10 @@ import { privateApi, publicApi } from "../common/axiosInstance"
 import { ANIMAL_PATH } from "./animal.path"
 import type { AnimalListResponse, AnimalCreateReq, AnimalDetailDto,  AnimalUpdateReq } from "@/types/animal/animal.dto";
 import { FILE_PATH } from "../file/file.path";
+import { data } from "react-router-dom";
 
 export const AnimalApi = {
-  createAnimalInfo: async (req: AnimalCreateReq) : Promise<string> => {
+  createAnimalInfo: async (req: AnimalCreateReq) : Promise<ApiResponse<void>> => {
     // const formData = new FormData;
 
     // formData.append(
@@ -15,18 +16,11 @@ export const AnimalApi = {
     // if (req.files && req.files.length > 0) {
     //   req.files.forEach(file => formData.append("files", file))
     // }
-
-    try {
-      await privateApi.post<void>(
-        ANIMAL_PATH.ROOT, req, {headers: {"Content-Type": "multipart/form-data"}}
-      ); 
+    const res = await privateApi.post<ApiResponse<void>>(
+      ANIMAL_PATH.ROOT, req, {headers: {"Content-Type": "multipart/form-data"}}
+    ); 
       
-      return "성공";
-    } catch (error) {
-      console.error(error);
-      return "실패";
-    }
-    
+    return res.data;
   },
 
 
@@ -47,7 +41,7 @@ export const AnimalApi = {
   },
 
   // 수정
-  updateAnimalInfo: async (animalId: number, req: AnimalUpdateReq): Promise<string> => {
+  updateAnimalInfo: async (animalId: number, req: AnimalUpdateReq): Promise<ApiResponse<void>> => {
     // const formData = new FormData();
 
     // formData.append(
@@ -59,16 +53,11 @@ export const AnimalApi = {
     //   req.files.forEach(file => formData.append("files", file))
     // }
 
-    try {
-      await privateApi.put<ApiResponse<void>>(
+    const res = await privateApi.put<ApiResponse<void>>(
         ANIMAL_PATH.BY_ID(animalId), req,
         {headers : { "Content-Type" : "multipart/form-data"}}
       );
-      return "성공";
-    } catch (error) {
-      console.error(error);
-      return "실패";
-    }
+      return res.data;
   },
 
 
