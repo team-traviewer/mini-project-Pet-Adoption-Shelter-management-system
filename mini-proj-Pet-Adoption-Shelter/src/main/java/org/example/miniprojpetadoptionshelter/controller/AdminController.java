@@ -59,4 +59,6 @@ public class AdminController {
         ResponseDto<UserProfileResponse> response = adminService.getUserProfile();
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+
+    
 }
