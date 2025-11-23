@@ -1,31 +1,44 @@
 package org.example.miniprojpetadoptionshelter.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.miniprojpetadoptionshelter.dto.Adoptions.request.CreateAdoptionRequest;
-import org.example.miniprojpetadoptionshelter.dto.Adoptions.request.UpdateAdoptionRequest;
-import org.example.miniprojpetadoptionshelter.dto.Adoptions.response.AdoptionResponse;
+import org.example.miniprojpetadoptionshelter.dto.Adoption.request.AdoptionCreateRequest;
+import org.example.miniprojpetadoptionshelter.dto.Adoption.request.AdoptionUpdateRequest;
+import org.example.miniprojpetadoptionshelter.dto.Adoption.response.AdoptionResponse;
+import org.example.miniprojpetadoptionshelter.security.user.CustomUser;
 import org.example.miniprojpetadoptionshelter.service.AdoptionService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/adoptions")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/adoptions")
 public class AdoptionController {
 
     private final AdoptionService adoptionService;
 
-    @GetMapping("/{id}")
-    public AdoptionResponse get(@PathVariable Long id) {
-        return adoptionService.getAdoption(id);
-    }
-
     @PostMapping
-    public Long create(@RequestBody CreateAdoptionRequest req) {
-        return adoptionService.createAdoption(req);
+    public ResponseEntity<AdoptionResponse> create(
+            @AuthenticationPrincipal CustomUser user,
+            @RequestBody AdoptionCreateRequest request
+    ) {
+        return ResponseEntity.ok(
+                adoptionService.createAdoption(user.getId(), request)
+        );
     }
 
-    @PatchMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody UpdateAdoptionRequest req) {
-        adoptionService.updateAdoption(id, req);
+    @GetMapping("/{id}")
+    public ResponseEntity<AdoptionResponse> getOne(
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(adoptionService.getAdoption(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AdoptionResponse> update(
+            @PathVariable Long id,
+            @RequestBody AdoptionUpdateRequest request
+    ) {
+        return ResponseEntity.ok(adoptionService.updateAdoption(id, request));
     }
 }

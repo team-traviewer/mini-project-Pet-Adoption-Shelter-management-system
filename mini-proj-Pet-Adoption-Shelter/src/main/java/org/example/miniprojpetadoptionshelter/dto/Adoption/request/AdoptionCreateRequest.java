@@ -1,16 +1,17 @@
-package org.example.miniprojpetadoptionshelter.dto.Adoptions.request;
+package org.example.miniprojpetadoptionshelter.dto.Adoption.request;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
-public class CreateAdoptionRequest {
+@Setter
+public class AdoptionCreateRequest {
     private Long animalId;
     private Long applicationId;
     private Long adopterId;
-
-    private LocalDate adoptionDate;
+    private String adoptionDate;
     private Integer fee;
     private String contractPDF;
 }
