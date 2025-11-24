@@ -1,7 +1,7 @@
 package org.example.miniprojpetadoptionshelter.security.user;
 
 import lombok.Getter;
-import org.example.miniprojpetadoptionshelter.entity.User;
+import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;

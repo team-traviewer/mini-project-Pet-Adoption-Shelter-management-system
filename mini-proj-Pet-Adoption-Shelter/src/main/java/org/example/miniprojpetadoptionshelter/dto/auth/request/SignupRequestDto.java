@@ -3,8 +3,8 @@ package org.example.miniprojpetadoptionshelter.dto.auth.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.example.miniprojpetadoptionshelter.entity.FileInfo;
-import org.example.miniprojpetadoptionshelter.entity.User;
+import org.example.miniprojpetadoptionshelter.entity.file.FileInfo;
+import org.example.miniprojpetadoptionshelter.entity.user.User;
 
 public record SignupRequestDto(
         @NotBlank(message = "아이디는 필수입니다.")

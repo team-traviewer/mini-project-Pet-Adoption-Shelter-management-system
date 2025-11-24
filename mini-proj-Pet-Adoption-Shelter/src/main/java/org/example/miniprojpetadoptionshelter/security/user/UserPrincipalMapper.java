@@ -2,8 +2,8 @@ package org.example.miniprojpetadoptionshelter.security.user;
 
 import lombok.RequiredArgsConstructor;
 
-import org.example.miniprojpetadoptionshelter.entity.User;
-import org.example.miniprojpetadoptionshelter.repository.UserRepository;
+import org.example.miniprojpetadoptionshelter.entity.user.User;
+import org.example.miniprojpetadoptionshelter.repository.user.UserRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;

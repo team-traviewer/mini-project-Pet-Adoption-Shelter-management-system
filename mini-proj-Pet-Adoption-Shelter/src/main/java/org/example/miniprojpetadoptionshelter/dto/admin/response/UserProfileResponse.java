@@ -1,6 +1,6 @@
 package org.example.miniprojpetadoptionshelter.dto.admin.response;
 
-import org.example.miniprojpetadoptionshelter.entity.User;
+import org.example.miniprojpetadoptionshelter.entity.user.User;
 
 import java.time.LocalDateTime;
 
