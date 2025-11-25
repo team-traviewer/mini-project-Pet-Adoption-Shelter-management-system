@@ -3,7 +3,7 @@ package org.example.miniprojpetadoptionshelter.controller.auth;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.miniprojpetadoptionshelter.common.apis.AuthApi;
+import org.example.miniprojpetadoptionshelter.common.apis.auth.AuthApi;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.auth.request.LoginRequestDto;
 import org.example.miniprojpetadoptionshelter.dto.auth.request.LogoutRequestDto;

@@ -1,9 +1,9 @@
 package org.example.miniprojpetadoptionshelter.service.fromAnimal.impl;
 
-import org.example.miniprojpetadoptionshelter.dto.intake.request.IntakeCreateReq;
-import org.example.miniprojpetadoptionshelter.dto.intake.request.IntakeUpdateReq;
-import org.example.miniprojpetadoptionshelter.dto.intake.response.IntakeDetailRes;
-import org.example.miniprojpetadoptionshelter.dto.intake.response.IntakeListRes;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.request.IntakeCreateReq;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.request.IntakeUpdateReq;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.response.IntakeDetailRes;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.response.IntakeListRes;
 import org.example.miniprojpetadoptionshelter.service.fromAnimal.IntakeService;
 
 import java.util.List;

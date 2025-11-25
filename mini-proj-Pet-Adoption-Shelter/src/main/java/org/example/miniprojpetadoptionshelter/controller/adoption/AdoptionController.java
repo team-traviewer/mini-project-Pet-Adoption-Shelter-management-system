@@ -1,9 +1,9 @@
 package org.example.miniprojpetadoptionshelter.controller.adoption;
 
 import lombok.RequiredArgsConstructor;
-import org.example.miniprojpetadoptionshelter.dto.Adoption.request.AdoptionCreateRequest;
-import org.example.miniprojpetadoptionshelter.dto.Adoption.request.AdoptionUpdateRequest;
-import org.example.miniprojpetadoptionshelter.dto.Adoption.response.AdoptionResponse;
+import org.example.miniprojpetadoptionshelter.dto.adoption.request.AdoptionCreateRequest;
+import org.example.miniprojpetadoptionshelter.dto.adoption.request.AdoptionUpdateRequest;
+import org.example.miniprojpetadoptionshelter.dto.adoption.response.AdoptionResponse;
 import org.example.miniprojpetadoptionshelter.security.user.CustomUser;
 import org.example.miniprojpetadoptionshelter.service.adoption.AdoptionService;
 import org.springframework.http.ResponseEntity;

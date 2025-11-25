@@ -1,7 +1,7 @@
 package org.example.miniprojpetadoptionshelter.controller.user;
 
 import jakarta.validation.Valid;
-import org.example.miniprojpetadoptionshelter.common.apis.UserApi;
+import org.example.miniprojpetadoptionshelter.common.apis.user.UserApi;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.user.request.UpdateMyProfileRequestDto;
 import org.example.miniprojpetadoptionshelter.dto.user.response.MyProfileResponseDto;

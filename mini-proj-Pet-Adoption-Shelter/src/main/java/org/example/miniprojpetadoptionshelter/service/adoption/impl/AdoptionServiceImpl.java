@@ -1,9 +1,9 @@
 package org.example.miniprojpetadoptionshelter.service.adoption.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.miniprojpetadoptionshelter.dto.Adoption.request.AdoptionCreateRequest;
-import org.example.miniprojpetadoptionshelter.dto.Adoption.request.AdoptionUpdateRequest;
-import org.example.miniprojpetadoptionshelter.dto.Adoption.response.AdoptionResponse;
+import org.example.miniprojpetadoptionshelter.dto.adoption.request.AdoptionCreateRequest;
+import org.example.miniprojpetadoptionshelter.dto.adoption.request.AdoptionUpdateRequest;
+import org.example.miniprojpetadoptionshelter.dto.adoption.response.AdoptionResponse;
 import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.example.miniprojpetadoptionshelter.entity.adoptions.Adoption;

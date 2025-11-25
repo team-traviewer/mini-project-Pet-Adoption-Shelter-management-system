@@ -1,9 +1,9 @@
 package org.example.miniprojpetadoptionshelter.service.adoption;
 
 
-import org.example.miniprojpetadoptionshelter.dto.Adoption.request.AdoptionCreateRequest;
-import org.example.miniprojpetadoptionshelter.dto.Adoption.request.AdoptionUpdateRequest;
-import org.example.miniprojpetadoptionshelter.dto.Adoption.response.AdoptionResponse;
+import org.example.miniprojpetadoptionshelter.dto.adoption.request.AdoptionCreateRequest;
+import org.example.miniprojpetadoptionshelter.dto.adoption.request.AdoptionUpdateRequest;
+import org.example.miniprojpetadoptionshelter.dto.adoption.response.AdoptionResponse;
 
 public interface AdoptionService {
     AdoptionResponse createAdoption(Long userId, AdoptionCreateRequest request);

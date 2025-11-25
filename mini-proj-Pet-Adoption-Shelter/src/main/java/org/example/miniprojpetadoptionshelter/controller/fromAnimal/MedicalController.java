@@ -1,10 +1,10 @@
 package org.example.miniprojpetadoptionshelter.controller.fromAnimal;
 
 import lombok.RequiredArgsConstructor;
-import org.example.miniprojpetadoptionshelter.dto.medical.request.MedicalCreateReq;
-import org.example.miniprojpetadoptionshelter.dto.medical.request.MedicalUpdateReq;
-import org.example.miniprojpetadoptionshelter.dto.medical.response.MedicalDetailRes;
-import org.example.miniprojpetadoptionshelter.dto.medical.response.MedicalListRes;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.medical.request.MedicalCreateReq;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.medical.request.MedicalUpdateReq;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.medical.response.MedicalDetailRes;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.medical.response.MedicalListRes;
 import org.example.miniprojpetadoptionshelter.service.fromAnimal.MedicalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

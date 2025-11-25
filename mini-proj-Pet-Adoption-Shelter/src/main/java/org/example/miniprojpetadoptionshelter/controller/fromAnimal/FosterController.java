@@ -1,10 +1,10 @@
 package org.example.miniprojpetadoptionshelter.controller.fromAnimal;
 
 import lombok.RequiredArgsConstructor;
-import org.example.miniprojpetadoptionshelter.dto.foster.request.FosterCreateReq;
-import org.example.miniprojpetadoptionshelter.dto.foster.request.FosterUpdateReq;
-import org.example.miniprojpetadoptionshelter.dto.foster.response.FosterDetailRes;
-import org.example.miniprojpetadoptionshelter.dto.foster.response.FosterListRes;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.request.FosterCreateReq;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.request.FosterUpdateReq;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.response.FosterDetailRes;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.response.FosterListRes;
 import org.example.miniprojpetadoptionshelter.service.fromAnimal.FosterService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

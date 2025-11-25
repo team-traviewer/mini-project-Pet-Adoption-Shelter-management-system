@@ -2,8 +2,8 @@ package org.example.miniprojpetadoptionshelter.controller.user;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.miniprojpetadoptionshelter.common.apis.AdminApi;
-import org.example.miniprojpetadoptionshelter.common.apis.RoleApi;
+import org.example.miniprojpetadoptionshelter.common.apis.auth.AdminApi;
+import org.example.miniprojpetadoptionshelter.common.apis.user.RoleApi;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.admin.request.GrantRoleRequest;
 import org.example.miniprojpetadoptionshelter.dto.admin.response.RoleListResponse;
