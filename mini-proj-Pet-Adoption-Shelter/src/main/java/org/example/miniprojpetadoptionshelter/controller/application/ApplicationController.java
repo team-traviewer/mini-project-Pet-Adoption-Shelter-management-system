@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(ApplicationApi.ROOT)
 @RequiredArgsConstructor
 public class ApplicationController {
     private final ApplicationService applicationService;
