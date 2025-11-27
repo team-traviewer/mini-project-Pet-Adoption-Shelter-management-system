@@ -1,6 +1,7 @@
 package org.example.miniprojpetadoptionshelter.dto.animal.response;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public record  AnimalDetailRes(
         Long animalId,
@@ -12,7 +13,9 @@ public record  AnimalDetailRes(
         BigDecimal ageYears,
         BigDecimal weightKg,
         String temperament,
-        String status
-//        List<AnimalFileDto> files
+        String status,
+        List<AnimalFileDto> files,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 ) {
 }

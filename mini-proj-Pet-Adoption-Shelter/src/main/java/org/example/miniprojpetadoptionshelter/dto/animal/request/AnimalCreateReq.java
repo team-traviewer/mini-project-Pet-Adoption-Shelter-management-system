@@ -15,6 +15,7 @@ public record AnimalCreateReq(
         BigDecimal weightKg,
         String temperament,
         String status,
+
         List<MultipartFile> files
 ) {
 
