@@ -6,14 +6,16 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @ToString(exclude = "password")
-public class UserPrincipal implements UserDetails, Serializable {
+public class UserPrincipal implements UserDetails, Serializable, OAuth2User {
 
     private final Long id;
     private final String loginId;
@@ -50,11 +52,47 @@ public class UserPrincipal implements UserDetails, Serializable {
         this.enabled = enabled;
     }
 
-    @Override public Collection<? extends GrantedAuthority> getAuthorities() { return authorities; }
-    @Override public String getPassword() { return password; }
-    @Override public String getUsername() { return loginId; }
-    @Override public boolean isAccountNonExpired() { return accountNonExpired; }
-    @Override public boolean isAccountNonLocked() { return accountNonLocked; }
-    @Override public boolean isCredentialsNonExpired() { return credentialsNonExpired; }
-    @Override public boolean isEnabled() { return enabled; }
+    // OAuth2User 전용 필드
+    private Map<String, Object> attributes;
+    private String name;
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return loginId;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 }
