@@ -11,7 +11,6 @@ import org.example.miniprojpetadoptionshelter.dto.application.request.Applicatio
 import org.example.miniprojpetadoptionshelter.dto.application.request.ApplicationUpdateReq;
 import org.example.miniprojpetadoptionshelter.dto.application.response.ApplicationDetailRes;
 import org.example.miniprojpetadoptionshelter.dto.application.response.ApplicationListRes;
-import org.example.miniprojpetadoptionshelter.entity.application.Application;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 import org.example.miniprojpetadoptionshelter.service.application.ApplicationService;
@@ -30,7 +29,7 @@ public class ApplicationController {
 
     // 1) 입양 신청 생성
     @PreAuthorize("hasAnyRole('USER', 'STAFF', 'ADMIN')")
-    @PostMapping
+    @PostMapping(ApplicationApi.ROOT)
     public ResponseEntity<ResponseDto<Void>> createApplication(
             @AuthenticationPrincipal UserPrincipal principal,
             @Valid @RequestBody ApplicationCreateReq req
@@ -41,7 +40,7 @@ public class ApplicationController {
 
     // 2) 입양 신청 조회 (전체 조회 - 내림차순/오름차순)
     @PreAuthorize("hasRole('STAFF')")
-    @GetMapping
+    @GetMapping(ApplicationApi.ROOT)
     public ResponseEntity<ResponseDto<List<ApplicationListRes>>> getAllApplicationsOrderByCreatedAt(
             @AuthenticationPrincipal User principal,
             @RequestParam("sortedBy") boolean sortedBy
@@ -74,31 +73,19 @@ public class ApplicationController {
         return ResponseEntity.ok().body(response);
     }
 
-
     // 5) 입양 신청 심사 시작 (APPLIED -> REVIEW)
     @PreAuthorize("hasRole('STAFF')")
     @PutMapping(ApplicationApi.REVIEW)
     public ResponseEntity<ResponseDto<Void>> changeApplicationStatusToReviewById(
             @AuthenticationPrincipal User principal,
-            @PathVariable("applicationId") @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId
-    ) {
-        ResponseDto<Void> response = applicationService.changeApplicationStatusToReviewById(principal, applicationId);
-        return ResponseEntity.ok().body(response);
-    }
-
-    // 6) 입양 신청 심사 (REVIEW 일 때 정보 수정)
-    @PreAuthorize("hasRole('STAFF')")
-    @PatchMapping(ApplicationApi.REVIEW)
-    public ResponseEntity<ResponseDto<Void>> updateApplicationInfoById(
-            @AuthenticationPrincipal User principal,
             @PathVariable("applicationId") @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId,
             @Valid @RequestBody ApplicationUpdateReq req
     ) {
-        ResponseDto<Void> response = applicationService.updateApplicationInfoById(principal, applicationId, req);
+        ResponseDto<Void> response = applicationService.startApplicationReviewById(principal, applicationId, req);
         return ResponseEntity.ok().body(response);
     }
 
-    // 7) 입양 신청 심사 승인(REVIEW -> APPROVED)
+    // 6) 입양 신청 심사 승인(REVIEW -> APPROVED)
     @PreAuthorize("hasRole('STAFF')")
     @PutMapping(ApplicationApi.APPROVE)
     public ResponseEntity<ResponseDto<Void>> changeApplicationStatusToApprovedById(
@@ -109,7 +96,7 @@ public class ApplicationController {
         return ResponseEntity.ok().body(response);
     }
 
-    // 8) 입양 신청 심사 거절(REVIEW -> REJECTED)
+    // 7) 입양 신청 심사 거절(REVIEW -> REJECTED)
     @PreAuthorize("hasRole('STAFF')")
     @PutMapping(ApplicationApi.REJECT)
     public ResponseEntity<ResponseDto<Void>> changeApplicationStatusToRejectedById(
