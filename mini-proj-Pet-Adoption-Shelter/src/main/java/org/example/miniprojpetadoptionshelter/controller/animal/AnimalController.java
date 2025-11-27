@@ -7,7 +7,6 @@ import org.example.miniprojpetadoptionshelter.dto.animal.request.AnimalCreateReq
 import org.example.miniprojpetadoptionshelter.dto.animal.request.AnimalUpdateReq;
 import org.example.miniprojpetadoptionshelter.dto.animal.response.AnimalDetailRes;
 import org.example.miniprojpetadoptionshelter.dto.animal.response.AnimalListRes;
-import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
 import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 import org.example.miniprojpetadoptionshelter.service.animal.AnimalService;
 import org.springframework.http.HttpStatus;

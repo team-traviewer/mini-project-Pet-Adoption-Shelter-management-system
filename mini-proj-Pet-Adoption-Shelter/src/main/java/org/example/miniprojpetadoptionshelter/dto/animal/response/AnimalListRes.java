@@ -1,12 +1,12 @@
 package org.example.miniprojpetadoptionshelter.dto.animal.response;
 
-import org.example.miniprojpetadoptionshelter.dto.file.FileINfoRes;
+import org.example.miniprojpetadoptionshelter.dto.file.FileInfoRes;
 
 public record AnimalListRes(
         Long id,
         Long shelterId,
         String name,
         String species,
-        FileINfoRes thumbnail
+        FileInfoRes thumbnail
 ) {
 }
