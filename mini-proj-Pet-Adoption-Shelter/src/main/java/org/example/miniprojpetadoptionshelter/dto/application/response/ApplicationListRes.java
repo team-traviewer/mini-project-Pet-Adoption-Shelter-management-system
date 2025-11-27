@@ -10,5 +10,4 @@ public record ApplicationListRes(
         String message,
         String applicantName,
         String createdAtKst
-) {
-}
+) {}
