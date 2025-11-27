@@ -3,18 +3,23 @@ package org.example.miniprojpetadoptionshelter.entity.fromAnimal;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.miniprojpetadoptionshelter.common.enums.FosterStatus;
 import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
 import org.example.miniprojpetadoptionshelter.entity.base.BaseTimeEntity;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "foster_care",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_foster_active ", columnNames = {"animal_id", "status"}
+                )
+        },
         indexes = {
-            @Index(name = "idx_foster_animal", columnList = "animal_id"),
-            @Index(name = "idx_foster_user", columnList = "foster_user_id"),
-            @Index(name = "idx_foster_status", columnList = "status")
+            @Index(name = "idx_foster_user", columnList = "foster_user_id, status")
         })
 @Getter
 @Setter
@@ -28,12 +33,12 @@ public class Foster extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id", nullable = false,
-                foreignKey = @ForeignKey(name = "fk_foster_animal"))
+                foreignKey = @ForeignKey(name = "fk_foster_care_animal"))
     private Animal animal;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "foster_user_id", nullable = false,
-                foreignKey = @ForeignKey(name = "fk_foster_user"))
+                foreignKey = @ForeignKey(name = "fk_foster_care_user"))
     private User fosterUser;
 
     @Column(name = "start_date",nullable = false)
@@ -42,20 +47,24 @@ public class Foster extends BaseTimeEntity {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    /* 임시보호 상태 : 초기값 ACTIVE */
+    @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private String status = "ACTIVE";
+    private FosterStatus status = FosterStatus.ACTIVE;
 
-    @Column(columnDefinition = "TEXT")
+    @Lob
+    @JdbcTypeCode(SqlTypes.LONGVARCHAR)
+    @Column(name = "note")
     private String note;
 
     // 임보 종료
     public void completeFoster(LocalDate endDate){
         this.endDate = endDate;
-        this.status = "CLOSED";
+        this.status = FosterStatus.CLOSED;
     }
     // 임보 취소됨
     public void cancelFoster() {
-        this.status = "CANCELED";
+        this.status = FosterStatus.CANCELED;
     }
     @Builder
     public Foster(Animal animal, User fosterUser, LocalDate startDate, LocalDate endDate, String status){
@@ -63,7 +72,7 @@ public class Foster extends BaseTimeEntity {
         this.fosterUser = fosterUser;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.status = status != null ? status : "ACTIVE";
+        this.status =  FosterStatus.ACTIVE;
     }
 
 }

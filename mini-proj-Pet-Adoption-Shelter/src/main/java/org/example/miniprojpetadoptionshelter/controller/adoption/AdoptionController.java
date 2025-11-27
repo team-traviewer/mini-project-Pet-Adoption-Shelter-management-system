@@ -1,6 +1,7 @@
 package org.example.miniprojpetadoptionshelter.controller.adoption;
 
 import lombok.RequiredArgsConstructor;
+import org.example.miniprojpetadoptionshelter.common.apis.adoption.AdoptionApi;
 import org.example.miniprojpetadoptionshelter.dto.adoption.request.AdoptionCreateRequest;
 import org.example.miniprojpetadoptionshelter.dto.adoption.request.AdoptionUpdateRequest;
 import org.example.miniprojpetadoptionshelter.dto.adoption.response.AdoptionResponse;
@@ -12,33 +13,35 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/adoptions")
+@RequestMapping(AdoptionApi.ROOT)
 public class AdoptionController {
 
     private final AdoptionService adoptionService;
 
     @PostMapping
-    public ResponseEntity<AdoptionResponse> create(
+    public ResponseEntity<AdoptionResponse> createAdoption(
             @AuthenticationPrincipal CustomUser user,
             @RequestBody AdoptionCreateRequest request
     ) {
-        return ResponseEntity.ok(
-                adoptionService.createAdoption(user.getId(), request)
-        );
+        Long adopterId = user.getId();
+        AdoptionResponse response = adoptionService.createAdoption(adopterId, request);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AdoptionResponse> getOne(
-            @PathVariable Long id
+    @GetMapping(AdoptionApi.BY_ID)
+    public ResponseEntity<AdoptionResponse> getAdoptionById(
+            @PathVariable Long adoptionId
     ) {
-        return ResponseEntity.ok(adoptionService.getAdoption(id));
+        AdoptionResponse response = adoptionService.getAdoption(adoptionId);
+        return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<AdoptionResponse> update(
-            @PathVariable Long id,
+    @PutMapping(AdoptionApi.UPDATE)
+    public ResponseEntity<AdoptionResponse> updateAdoption(
+            @PathVariable Long adoptionId,
             @RequestBody AdoptionUpdateRequest request
     ) {
-        return ResponseEntity.ok(adoptionService.updateAdoption(id, request));
+        AdoptionResponse response = adoptionService.updateAdoption(adoptionId, request);
+        return ResponseEntity.ok(response);
     }
 }

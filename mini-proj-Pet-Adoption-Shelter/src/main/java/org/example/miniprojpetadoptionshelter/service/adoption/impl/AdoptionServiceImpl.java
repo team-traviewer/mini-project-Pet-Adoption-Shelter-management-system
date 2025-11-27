@@ -5,9 +5,9 @@ import org.example.miniprojpetadoptionshelter.dto.adoption.request.AdoptionCreat
 import org.example.miniprojpetadoptionshelter.dto.adoption.request.AdoptionUpdateRequest;
 import org.example.miniprojpetadoptionshelter.dto.adoption.response.AdoptionResponse;
 import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
+import org.example.miniprojpetadoptionshelter.entity.application.Application;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.example.miniprojpetadoptionshelter.entity.adoptions.Adoption;
-import org.example.miniprojpetadoptionshelter.entity.adoptions.Application;
 import org.example.miniprojpetadoptionshelter.repository.adoption.AdoptionRepository;
 import org.example.miniprojpetadoptionshelter.repository.animal.AnimalRepository;
 import org.example.miniprojpetadoptionshelter.repository.application.ApplicationRepository;
