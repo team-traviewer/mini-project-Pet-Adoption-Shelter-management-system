@@ -81,7 +81,7 @@ public class ApplicationController {
             @PathVariable("applicationId") @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId,
             @Valid @RequestBody ApplicationUpdateReq req
     ) {
-        ResponseDto<Void> response = applicationService.startApplicationReviewById(principal, applicationId, req);
+        ResponseDto<Void> response = applicationService.changeApplicationStatusToReviewById(principal, applicationId, req);
         return ResponseEntity.ok().body(response);
     }
 
