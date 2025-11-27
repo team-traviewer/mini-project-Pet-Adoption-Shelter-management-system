@@ -4,13 +4,13 @@ import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record ApplicationUpdateReq(
 
         @FutureOrPresent(message = "마감일은 오늘 이후로 설정해야 합니다.")
-        LocalDate interviewAt,
+        LocalDateTime interviewAt,
 
         @NotNull
         Boolean homeCheck
-) {
-}
+) {}

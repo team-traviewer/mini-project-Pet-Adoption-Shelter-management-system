@@ -14,16 +14,17 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "applications",
+@Table(name = "adoption_applications",
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_application_once ", columnNames = {"animal_id", "applicant_id", "status"}
+                @UniqueConstraint(name = "uk_application_once", columnNames = {"animal_id", "applicant_id", "status"}
                 )
         },
         indexes = {
-                @Index(name = "idx_app_animal ", columnList = "animal_id, status"),
-                @Index(name = "idx_app_user ", columnList = "applicant_id, status")
+                @Index(name = "idx_app_animal", columnList = "animal_id, status"),
+                @Index(name = "idx_app_user", columnList = "applicant_id, status")
         })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,13 +37,13 @@ public class Application extends BaseTimeEntity {
 
     /** FK */
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id", nullable = false, foreignKey = @ForeignKey(name = "fk_applications_animals"))
     private Animal animal;
 
     /** FK */
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_id", nullable = false, foreignKey = @ForeignKey(name = "fk_applications_users"))
     private User user;
 
@@ -53,7 +54,7 @@ public class Application extends BaseTimeEntity {
 
     /** 인터뷰 일정 */
     @Column(name = "interview_at")
-    private LocalDate interviewAt; // 기본값 null
+    private LocalDateTime interviewAt; // 기본값 null
 
     /** 가정방문 확인 */
     @Column(name = "home_check", nullable = false)
@@ -89,7 +90,7 @@ public class Application extends BaseTimeEntity {
     }
 
     /** REVIEW 일 때만 정보 수정 변경 */
-    public void updateApplicationInfo(LocalDate interviewAt, boolean homeCheck) {
+    public void updateApplicationInfo(LocalDateTime interviewAt, boolean homeCheck) {
         this.interviewAt = interviewAt;
         this.homeCheck = homeCheck;
     }
