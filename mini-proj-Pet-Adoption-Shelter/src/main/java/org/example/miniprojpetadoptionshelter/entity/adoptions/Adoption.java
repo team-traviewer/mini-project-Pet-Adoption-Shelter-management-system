@@ -3,6 +3,7 @@ package org.example.miniprojpetadoptionshelter.entity.adoptions;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
+import org.example.miniprojpetadoptionshelter.entity.application.Application;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
 
 import java.time.LocalDate;
