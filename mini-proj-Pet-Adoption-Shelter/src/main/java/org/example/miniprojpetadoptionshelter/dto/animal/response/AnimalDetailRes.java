@@ -2,7 +2,7 @@ package org.example.miniprojpetadoptionshelter.dto.animal.response;
 
 import java.math.BigDecimal;
 
-public record AnimalDetailRes(
+public record  AnimalDetailRes(
         Long animalId,
         Long shelterId,
         String name,

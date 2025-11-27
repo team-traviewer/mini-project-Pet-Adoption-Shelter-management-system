@@ -1,5 +1,7 @@
 package org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.response;
 
+import org.example.miniprojpetadoptionshelter.common.enums.FosterStatus;
+
 import java.time.LocalDate;
 
 public record FosterListRes(
@@ -7,6 +9,6 @@ public record FosterListRes(
         Long animalId,
         Long fosterUserId,
         LocalDate startDate,
-        String status
+        FosterStatus status
 ) {
 }
