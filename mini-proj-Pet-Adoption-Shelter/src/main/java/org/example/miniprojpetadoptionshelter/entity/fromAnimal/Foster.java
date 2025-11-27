@@ -7,24 +7,28 @@ import org.example.miniprojpetadoptionshelter.common.enums.FosterStatus;
 import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
 import org.example.miniprojpetadoptionshelter.entity.base.BaseTimeEntity;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "foster_care",
+@Table(name = "foster_cares",
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_foster_active ", columnNames = {"animal_id", "status"}
+                @UniqueConstraint(name = "uk_foster_cares_animal_id_status", columnNames = {"animal_id", "status"}
                 )
         },
         indexes = {
-            @Index(name = "idx_foster_user", columnList = "foster_user_id, status")
+            @Index(name = "idx_foster_cares_user", columnList = "foster_user_id, status")
         })
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Foster extends BaseTimeEntity {
+public class Foster{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +37,12 @@ public class Foster extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id", nullable = false,
-                foreignKey = @ForeignKey(name = "fk_foster_care_animal"))
+            foreignKey = @ForeignKey(name = "fk_foster_cares_animal"))
     private Animal animal;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "foster_user_id", nullable = false,
-                foreignKey = @ForeignKey(name = "fk_foster_care_user"))
+            foreignKey = @ForeignKey(name = "fk_foster_cares_user"))
     private User fosterUser;
 
     @Column(name = "start_date",nullable = false)
@@ -57,22 +61,24 @@ public class Foster extends BaseTimeEntity {
     @Column(name = "note")
     private String note;
 
-    // 임보 종료
-    public void completeFoster(LocalDate endDate){
-        this.endDate = endDate;
-        this.status = FosterStatus.CLOSED;
-    }
-    // 임보 취소됨
-    public void cancelFoster() {
-        this.status = FosterStatus.CANCELED;
-    }
+    @CreationTimestamp // 생성될 때 자동으로 현재시각 넣어줌. (생성자에 불필요)
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "DATETIME(6)")
+    private LocalDateTime createdAt;
+
     @Builder
-    public Foster(Animal animal, User fosterUser, LocalDate startDate, LocalDate endDate, String status){
+    public Foster(Animal animal, User fosterUser, LocalDate startDate){
         this.animal = animal;
         this.fosterUser = fosterUser;
         this.startDate = startDate;
-        this.endDate = endDate;
-        this.status =  FosterStatus.ACTIVE;
     }
 
+    // 임시보호 종료
+    public void closeFoster(LocalDate endDate){
+        this.endDate = endDate;
+        this.status = FosterStatus.CLOSED;
+    }
+    // 임시보호 취소
+    public void cancelFoster() {
+        this.status = FosterStatus.CANCELED;
+    }
 }
