@@ -75,6 +75,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                         )
                 );
 
+        
         CookieUtils.addHttpOnlyCookie(
                 response,
                 REFRESH_TOKEN,
