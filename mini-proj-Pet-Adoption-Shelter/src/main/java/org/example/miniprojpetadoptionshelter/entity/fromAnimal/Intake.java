@@ -2,6 +2,8 @@ package org.example.miniprojpetadoptionshelter.entity.fromAnimal;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.miniprojpetadoptionshelter.common.enums.IntakeReason;
+import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.response.IntakeDetailRes;
 import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
 import org.example.miniprojpetadoptionshelter.entity.base.BaseTimeEntity;
 
@@ -9,10 +11,9 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "medical_records",
+@Table(name = "intake_records",
         indexes = {
-            @Index(name = "idx_medical_animal", columnList = "animal_id"),
-            @Index(name = "idx_medical_visit", columnList = "visit_date")
+            @Index(name = "idx_intake_animal", columnList = "animal_id, intake_date")
         })
 @Getter
 @Setter
@@ -27,14 +28,15 @@ public class Intake extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id",
             nullable = false,
-            foreignKey = @ForeignKey(name = "fk_medcial_animal"))
+            foreignKey = @ForeignKey(name = "fk_intake_records_animal"))
     private Animal animal;
 
     @Column(name = "intake_date", nullable = false)
     private LocalDate intakeDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "intake_reason", nullable = false, length = 100)
-    private String intakeReason;
+    private IntakeReason intakeReason = IntakeReason.STRAY;
     // STRAY/SURRENDER/TRANSFER
 
     @Column(name = "found_location", length = 255)
@@ -43,14 +45,21 @@ public class Intake extends BaseTimeEntity {
     @Column(name = "note", columnDefinition = "TEXT")
     private String note;
 
-    // === 수정 내용 ===
+    // intakeReason SURRENDER 경우
+    public void intakeSurrender(){
+        this.intakeReason = IntakeReason.SURRENDER;
+    }
 
+    // intakeReason Transfer 경우
+    public void intakeTransfer() {
+        this.intakeReason = IntakeReason.TRANSFER;
+    }
 
     @Builder
     public Intake(
             Animal animal,
             LocalDate intakeDate,
-            String intakeReason,
+            IntakeReason intakeReason,
             String foundLocation,
             String note
     ) {

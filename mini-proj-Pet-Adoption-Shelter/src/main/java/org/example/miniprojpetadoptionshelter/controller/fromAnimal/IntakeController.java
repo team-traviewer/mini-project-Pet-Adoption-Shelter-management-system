@@ -1,42 +1,67 @@
 package org.example.miniprojpetadoptionshelter.controller.fromAnimal;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.example.miniprojpetadoptionshelter.common.apis.fromAnimal.IntakeApi;
+import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.request.IntakeCreateReq;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.request.IntakeUpdateReq;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.response.IntakeDetailRes;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.response.IntakeListRes;
+import org.example.miniprojpetadoptionshelter.entity.fromAnimal.Intake;
+import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 import org.example.miniprojpetadoptionshelter.service.fromAnimal.IntakeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/intakeRecords")
 @RequiredArgsConstructor
 public class IntakeController {
 
     private final IntakeService intakeService;
 
-    @PostMapping
-    public ResponseEntity<Void> createIntake(@RequestBody IntakeCreateReq req) {
-        intakeService.createIntake(req);
-        return ResponseEntity.ok().build();
+    @PreAuthorize("hasRole('STAFF')")
+    @PostMapping(IntakeApi.INTAKEANIMAL)
+    public ResponseEntity<ResponseDto<Void>> createIntake(
+            @RequestBody IntakeCreateReq req,
+            @AuthenticationPrincipal UserPrincipal principal
+            ) {
+        ResponseDto<Void> response = intakeService.createIntake(req, principal);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping
-    public ResponseEntity<List<IntakeListRes>> getIntakeList(@RequestParam Long animalId) {
-        return ResponseEntity.ok(intakeService.getIntakeList(animalId));
+    @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
+    @GetMapping(IntakeApi.INTAKEANIMAL)
+    public ResponseEntity<ResponseDto<List<IntakeListRes>>> getIntakeList(
+            @RequestParam Long animalId,
+            @AuthenticationPrincipal UserPrincipal principal
+    ) {
+        ResponseDto<List<IntakeListRes>> response = intakeService.getIntakeList(animalId, principal);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<IntakeDetailRes> getIntakeDetail(@PathVariable Long id) {
-        return ResponseEntity.ok(intakeService.getIntakeDetail(id));
+    @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
+    @GetMapping(IntakeApi.BY_ID)
+    public ResponseEntity<ResponseDto<IntakeDetailRes>> getIntakeDetail(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserPrincipal principal
+    ) {
+        ResponseDto<IntakeDetailRes> response = intakeService.getIntakeDetail(id, principal);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateIntake(@PathVariable Long id, @RequestBody IntakeUpdateReq req) {
-        intakeService.updateIntake(id, req);
-        return ResponseEntity.ok().build();
+    @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
+    @PutMapping(IntakeApi.BY_ID)
+    public ResponseEntity<ResponseDto<Void>> updateIntake(
+            @PathVariable Long id, @RequestBody IntakeUpdateReq req,
+            @AuthenticationPrincipal UserPrincipal principal
+    ) {
+        ResponseDto<Void> response = intakeService.updateIntake(id, req, principal);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
