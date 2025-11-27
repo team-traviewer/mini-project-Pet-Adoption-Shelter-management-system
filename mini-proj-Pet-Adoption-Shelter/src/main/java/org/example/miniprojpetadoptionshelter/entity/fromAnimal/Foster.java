@@ -32,7 +32,7 @@ public class Foster{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,7 +53,7 @@ public class Foster{
 
     /* 임시보호 상태 : 초기값 ACTIVE */
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
+    @Column(name ="status", length = 20, nullable = false)
     private FosterStatus status = FosterStatus.ACTIVE;
 
     @Lob
@@ -73,12 +73,14 @@ public class Foster{
     }
 
     // 임시보호 종료
-    public void closeFoster(LocalDate endDate){
-        this.endDate = endDate;
+    public void closeFoster(String note){
+        this.note = note;
+        this.endDate = LocalDate.now();
         this.status = FosterStatus.CLOSED;
     }
     // 임시보호 취소
-    public void cancelFoster() {
+    public void cancelFoster(String note) {
+        this.note = note;
         this.status = FosterStatus.CANCELED;
     }
 }
