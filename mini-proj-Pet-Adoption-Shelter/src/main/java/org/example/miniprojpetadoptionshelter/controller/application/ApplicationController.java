@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.example.miniprojpetadoptionshelter.common.apis.application.ApplicationApi;
+import org.example.miniprojpetadoptionshelter.common.enums.ApplicationStatus;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.application.request.ApplicationCancelReq;
 import org.example.miniprojpetadoptionshelter.dto.application.request.ApplicationCreateReq;
@@ -11,24 +12,29 @@ import org.example.miniprojpetadoptionshelter.dto.application.request.Applicatio
 import org.example.miniprojpetadoptionshelter.dto.application.request.ApplicationUpdateReq;
 import org.example.miniprojpetadoptionshelter.dto.application.response.ApplicationDetailRes;
 import org.example.miniprojpetadoptionshelter.dto.application.response.ApplicationListRes;
+import org.example.miniprojpetadoptionshelter.entity.application.Application;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 import org.example.miniprojpetadoptionshelter.service.application.ApplicationService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 public class ApplicationController {
     private final ApplicationService applicationService;
 
     // 1) 입양 신청 생성
-    @PreAuthorize("hasAnyRole('USER', 'STAFF', 'ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(ApplicationApi.ROOT)
     public ResponseEntity<ResponseDto<Void>> createApplication(
             @AuthenticationPrincipal UserPrincipal principal,
@@ -38,19 +44,26 @@ public class ApplicationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // 2) 입양 신청 조회 (전체 조회 - 내림차순/오름차순)
-    @PreAuthorize("hasRole('STAFF')")
+    // 2) 입양 신청 조회 (전체 조회)
+    @PreAuthorize("hasAnyRole('USER', 'STAFF', 'ADMIN')")
     @GetMapping(ApplicationApi.ROOT)
-    public ResponseEntity<ResponseDto<List<ApplicationListRes>>> getAllApplicationsOrderByCreatedAt(
+    public ResponseEntity<ResponseDto<List<ApplicationListRes>>> getApplications(
             @AuthenticationPrincipal User principal,
-            @RequestParam("sortedBy") boolean sortedBy
+
+            @RequestParam(required = false) Long animalId,
+            @RequestParam(required = false) Long applicantId,
+            @RequestParam(required = false)ApplicationStatus status,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate from,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate to
     ) {
-        ResponseDto<List<ApplicationListRes>> response = applicationService.getAllApplicationsOrderByCreatedAt(principal, sortedBy);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        ResponseDto<List<ApplicationListRes>> response = applicationService.getApplications(principal, animalId, applicantId, status, from, to);
+        return ResponseEntity.ok().body(response);
     }
 
     // 3) 입양 신청 단건 조회 (id)
-    @PreAuthorize("hasRole('STAFF')")
+    @PreAuthorize("hasAnyRole('USER', 'STAFF', 'ADMIN')")
     @GetMapping(ApplicationApi.BY_ID)
     public ResponseEntity<ResponseDto<ApplicationDetailRes>> getApplicationById(
             @AuthenticationPrincipal User principal,

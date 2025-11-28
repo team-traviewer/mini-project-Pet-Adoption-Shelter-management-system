@@ -1,5 +1,6 @@
 package org.example.miniprojpetadoptionshelter.controller.fromAnimal;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.example.miniprojpetadoptionshelter.common.apis.fromAnimal.FosterApi;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,6 +26,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 public class FosterController {
     private final FosterService fosterService;
 
@@ -31,7 +34,7 @@ public class FosterController {
     @PostMapping(FosterApi.ROOT)
     public ResponseEntity<ResponseDto<Void>> createFoster(
             @AuthenticationPrincipal UserPrincipal principal,
-            @RequestBody FosterCreateReq req
+            @Valid @RequestBody FosterCreateReq req
     ) {
         ResponseDto<Void> response = fosterService.createFoster(principal, req);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -49,7 +52,7 @@ public class FosterController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
     ) {
         ResponseDto<List<FosterListRes>> response = fosterService.getFosterList(principal, fosterUserId, status, from, to);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.ok().body(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
@@ -59,7 +62,7 @@ public class FosterController {
             @AuthenticationPrincipal UserPrincipal principal
     ) {
         ResponseDto<FosterDetailRes> response = fosterService.getFosterDetail(fosterId, principal);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.ok().body(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
@@ -67,10 +70,10 @@ public class FosterController {
     public ResponseEntity<ResponseDto<Void>> closeFoster(
             @PathVariable("fosterId") @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId,
             @AuthenticationPrincipal UserPrincipal principal,
-            @RequestBody FosterCloseReq req
+            @Valid @RequestBody FosterCloseReq req
     ) {
         ResponseDto<Void> response = fosterService.closeFoster(fosterId, principal, req);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.ok().body(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
@@ -78,9 +81,9 @@ public class FosterController {
     public ResponseEntity<ResponseDto<Void>> cancelFoster(
             @PathVariable("fosterId") @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId,
             @AuthenticationPrincipal UserPrincipal principal,
-            @RequestBody FosterCancelReq req
+            @Valid @RequestBody FosterCancelReq req
     ) {
         ResponseDto<Void> response = fosterService.cancelFoster(fosterId, principal, req);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.ok().body(response);
     }
 }
