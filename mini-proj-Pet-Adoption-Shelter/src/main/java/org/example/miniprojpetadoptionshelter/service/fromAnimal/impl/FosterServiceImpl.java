@@ -1,5 +1,6 @@
 package org.example.miniprojpetadoptionshelter.service.fromAnimal.impl;
 
+import org.example.miniprojpetadoptionshelter.common.enums.FosterStatus;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.request.FosterCancelReq;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.request.FosterCloseReq;
@@ -9,6 +10,7 @@ import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.response.Fos
 import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 import org.example.miniprojpetadoptionshelter.service.fromAnimal.FosterService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class FosterServiceImpl implements FosterService {
@@ -19,7 +21,7 @@ public class FosterServiceImpl implements FosterService {
     }
 
     @Override
-    public ResponseDto<List<FosterListRes>> getFosterList(UserPrincipal principal) {
+    public ResponseDto<List<FosterListRes>> getFosterList(UserPrincipal principal, Long fosterUserId, FosterStatus status, LocalDate from, LocalDate to) {
         return null;
     }
 

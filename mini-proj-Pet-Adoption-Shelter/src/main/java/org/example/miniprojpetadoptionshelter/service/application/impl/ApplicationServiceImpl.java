@@ -1,5 +1,6 @@
 package org.example.miniprojpetadoptionshelter.service.application.impl;
 
+import org.example.miniprojpetadoptionshelter.common.enums.ApplicationStatus;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.application.request.ApplicationCancelReq;
 import org.example.miniprojpetadoptionshelter.dto.application.request.ApplicationCreateReq;
@@ -12,6 +13,7 @@ import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 import org.example.miniprojpetadoptionshelter.service.application.ApplicationService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,7 +24,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ResponseDto<List<ApplicationListRes>> getAllApplicationsOrderByCreatedAt(User principal, boolean sortedBy) {
+    public ResponseDto<List<ApplicationListRes>> getApplications(User principal, Long animalId, Long applicantId, ApplicationStatus status, LocalDate from, LocalDate to) {
         return null;
     }
 
