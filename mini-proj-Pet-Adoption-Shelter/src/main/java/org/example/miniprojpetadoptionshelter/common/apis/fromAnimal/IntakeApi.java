@@ -10,5 +10,5 @@ public class IntakeApi {
 
     public static final String ID_ONLY = "/{intakeId}";
     public static final String BY_ID = ROOT + ID_ONLY;
-    public static final String INTAKEANIMAL = AnimalApi.BY_ID + "/intakes";
+    public static final String INTAKE_ANIMAL = AnimalApi.BY_ID + "/intakes";
 }

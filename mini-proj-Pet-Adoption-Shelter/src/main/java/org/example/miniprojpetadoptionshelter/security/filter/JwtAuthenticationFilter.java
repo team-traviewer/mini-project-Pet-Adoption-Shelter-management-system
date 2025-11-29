@@ -19,12 +19,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-/**
- * === JwtAuthenticationFilter ===
- * - 매 요청마다 JWT 검증 후 SecurityContext에 인증 정보 주입
- * - Bearer Token 파싱, 검증(jwtProvider), userPrincipal 매핑
- * - 인증 성공 시 UsernamePasswordAuthenticationToken 구성
- */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -63,13 +57,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (Exception ex) {
             log.warn("[JwtAuthenticationFilter] 토큰 검증 실패: {}", ex.getMessage());
-            // Exception은 JsonAuthenticationEntryPoint 로 전달됨
         }
 
         chain.doFilter(request, response);
     }
 
-    /** Authorization Header → Bearer 토큰 추출 */
     private String resolveToken(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
 

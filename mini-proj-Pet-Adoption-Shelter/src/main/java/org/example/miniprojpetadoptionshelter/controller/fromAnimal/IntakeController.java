@@ -1,14 +1,12 @@
 package org.example.miniprojpetadoptionshelter.controller.fromAnimal;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.example.miniprojpetadoptionshelter.common.apis.fromAnimal.IntakeApi;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.request.IntakeCreateReq;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.request.IntakeUpdateReq;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.response.IntakeDetailRes;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.response.IntakeListRes;
-import org.example.miniprojpetadoptionshelter.entity.fromAnimal.Intake;
 import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 import org.example.miniprojpetadoptionshelter.service.fromAnimal.IntakeService;
 import org.springframework.http.HttpStatus;
@@ -26,7 +24,7 @@ public class IntakeController {
     private final IntakeService intakeService;
 
     @PreAuthorize("hasRole('STAFF')")
-    @PostMapping(IntakeApi.INTAKEANIMAL)
+    @PostMapping(IntakeApi.INTAKE_ANIMAL)
     public ResponseEntity<ResponseDto<Void>> createIntake(
             @RequestBody IntakeCreateReq req,
             @AuthenticationPrincipal UserPrincipal principal
@@ -36,7 +34,7 @@ public class IntakeController {
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
-    @GetMapping(IntakeApi.INTAKEANIMAL)
+    @GetMapping(IntakeApi.INTAKE_ANIMAL)
     public ResponseEntity<ResponseDto<List<IntakeListRes>>> getIntakeList(
             @RequestParam Long animalId,
             @AuthenticationPrincipal UserPrincipal principal

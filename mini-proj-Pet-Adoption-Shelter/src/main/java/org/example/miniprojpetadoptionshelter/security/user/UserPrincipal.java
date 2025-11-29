@@ -52,7 +52,6 @@ public class UserPrincipal implements UserDetails, Serializable, OAuth2User {
         this.enabled = enabled;
     }
 
-    // OAuth2User 전용 필드
     private Map<String, Object> attributes;
     private String name;
 

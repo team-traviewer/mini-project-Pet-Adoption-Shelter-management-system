@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.example.miniprojpetadoptionshelter.common.enums.ErrorCode;
 
-
 import java.time.Instant;
 
 @Getter

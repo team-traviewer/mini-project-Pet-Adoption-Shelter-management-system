@@ -3,6 +3,7 @@ package org.example.miniprojpetadoptionshelter.entity.user;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.miniprojpetadoptionshelter.common.enums.AuthProvider;
+import org.example.miniprojpetadoptionshelter.common.enums.Gender;
 import org.example.miniprojpetadoptionshelter.common.enums.RoleType;
 import org.example.miniprojpetadoptionshelter.entity.base.BaseTimeEntity;
 import org.example.miniprojpetadoptionshelter.entity.file.FileInfo;
@@ -43,6 +44,10 @@ public class User extends BaseTimeEntity {
     @Column(name = "phone", nullable = false, length = 30)
     private String phone;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender", nullable = false, length = 20)
+    private Gender gender;
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "profile_file_id",
             foreignKey = @ForeignKey(name = "fk_users_profile_file"))
@@ -72,6 +77,7 @@ public class User extends BaseTimeEntity {
             String email,
             String name,
             String phone,
+            Gender gender,
             FileInfo profileFile,
             AuthProvider provider,
             String providerId,
@@ -82,6 +88,7 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.name = name;
         this.phone = phone;
+        this.gender = gender;
         this.profileFile = profileFile;
         this.provider = provider;
         this.providerId = providerId;
