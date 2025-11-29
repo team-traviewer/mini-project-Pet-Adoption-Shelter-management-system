@@ -3,6 +3,7 @@ package org.example.miniprojpetadoptionshelter.dto.auth.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.example.miniprojpetadoptionshelter.common.enums.Gender;
 import org.example.miniprojpetadoptionshelter.entity.file.FileInfo;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
 
@@ -24,7 +25,9 @@ public record SignupRequestDto(
         String email,
 
         @NotBlank(message = "휴대폰 번호는 필수입니다.")
-        String phone
+        String phone,
+
+        Gender gender
 ) {
         public User toEntity(String encodedPassword, FileInfo profileFile) {
                 return User.builder()
@@ -33,6 +36,8 @@ public record SignupRequestDto(
                         .name(name)
                         .email(email)
                         .phone(phone)
+                        .gender(gender)
+                        .profileFile(profileFile)
                         .build();
         }
 }

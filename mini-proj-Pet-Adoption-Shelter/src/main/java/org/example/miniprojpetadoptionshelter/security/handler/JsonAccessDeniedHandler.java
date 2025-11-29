@@ -14,10 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-// AccessDeniedHandler 인터페이스
-// : 인증은 완료되었으나 요청에 대한 권한을 가지고 있지 않은 사용자가 엔드포인트에 접근 할 때 발생
-
-// 403 전용 AccessDeniedHandler
 @Slf4j
 @Component
 public class JsonAccessDeniedHandler implements AccessDeniedHandler {

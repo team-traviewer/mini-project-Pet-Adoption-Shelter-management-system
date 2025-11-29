@@ -12,8 +12,11 @@ import org.example.miniprojpetadoptionshelter.dto.auth.request.RefreshRequestDto
 import org.example.miniprojpetadoptionshelter.dto.auth.response.LoginResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.auth.response.PasswordVerifyResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.auth.response.SignupResponseDto;
+import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 import org.example.miniprojpetadoptionshelter.service.auth.AuthService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,37 +44,46 @@ public class AuthController {
     }
 
     // 로그아웃
+    @PreAuthorize("hasAnyRole('USER','STAFF','ADMIN')")
     @PostMapping(AuthApi.LOGOUT)
     public ResponseEntity<ResponseDto<Void>> logout(
-            @Valid @RequestBody LogoutRequestDto request
-    ) {
-        ResponseDto<Void> response = authService.logout(request);
+            @Valid @RequestBody LogoutRequestDto request,
+            @AuthenticationPrincipal UserPrincipal principal
+            ) {
+        ResponseDto<Void> response = authService.logout(request, principal);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     // 토큰 재발급
+    @PreAuthorize("hasAnyRole('USER','STAFF','ADMIN')")
+    @PostMapping(AuthApi.REFRESH)
     public ResponseEntity<ResponseDto<LoginResponseDto>> refresh(
-            @Valid @RequestBody RefreshRequestDto request
+            @Valid @RequestBody RefreshRequestDto request,
+            @AuthenticationPrincipal UserPrincipal principal
     ) {
-       ResponseDto<LoginResponseDto> response = authService.refresh(request);
+       ResponseDto<LoginResponseDto> response = authService.refresh(request, principal);
        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     // 비밀번호 재설정
+    @PreAuthorize("hasAnyRole('USER','STAFF','ADMIN')")
     @PostMapping(AuthApi.PASSWORD_RESET)
     public ResponseEntity<ResponseDto<Void>> resetPassword(
-            @Valid @RequestBody PasswordResetRequestDto request
+            @Valid @RequestBody PasswordResetRequestDto request,
+            @AuthenticationPrincipal UserPrincipal principal
     ) {
-       ResponseDto<Void> response = authService.resetPassword(request);
+       ResponseDto<Void> response = authService.resetPassword(request, principal);
        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     // 비밀번호 재설정 토큰 유효성 확인
+    @PreAuthorize("hasAnyRole('USER','STAFF','ADMIN')")
     @PostMapping(AuthApi.VERIFY)
     public ResponseEntity<ResponseDto<PasswordVerifyResponseDto>> verify(
-            @RequestParam("token") String token
+            @RequestParam("token") String token,
+            @AuthenticationPrincipal UserPrincipal principal
     ) {
-        ResponseDto<PasswordVerifyResponseDto> response = authService.verify(token);
+        ResponseDto<PasswordVerifyResponseDto> response = authService.verify(token, principal);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

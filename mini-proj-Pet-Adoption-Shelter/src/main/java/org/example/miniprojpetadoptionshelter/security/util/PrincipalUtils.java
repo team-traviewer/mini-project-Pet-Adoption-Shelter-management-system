@@ -6,22 +6,9 @@ import org.example.miniprojpetadoptionshelter.common.enums.ErrorCode;
 import org.example.miniprojpetadoptionshelter.exception.BusinessException;
 import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 
-/**
- * === PrincipalUtils ===
- *  - 인증된 UserPrincipal의 상태 검사 유틸리티
- *  - SecurityContext 인증 객체의 상태를 서비스/컨트롤러에서 통합 검증
- */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PrincipalUtils {
 
-    /**
-     * principal 상태 검증:
-     * 1) null → INVALID_AUTH
-     * 2) disabled → ACCESS_DENIED
-     * 3) locked → ACCESS_DENIED
-     * 4) account expired → ACCESS_DENIED
-     * 5) credentials expired → ACCESS_DENIED
-     */
     public static void validateActive(UserPrincipal principal) {
 
         // 1) 로그인 안 한 상태 (null principal)

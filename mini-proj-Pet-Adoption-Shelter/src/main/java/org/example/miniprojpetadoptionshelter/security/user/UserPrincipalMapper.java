@@ -16,7 +16,6 @@ public class UserPrincipalMapper {
 
     private final UserRepository userRepository;
 
-    /** === JWT Filter에서 loginId만 가지고 principal 생성용 === */
     public UserPrincipal toPrincipal(@NonNull String loginId) {
 
         User user = userRepository.findWithRolesByLoginId(loginId)
@@ -25,7 +24,6 @@ public class UserPrincipalMapper {
         return map(user);
     }
 
-    /** === DB User 엔티티 → UserPrincipal 변환 === */
     public UserPrincipal map(@NonNull User user) {
 
         List<SimpleGrantedAuthority> authorities =
