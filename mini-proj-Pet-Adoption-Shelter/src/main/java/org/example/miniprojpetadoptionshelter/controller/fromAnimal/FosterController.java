@@ -47,43 +47,43 @@ public class FosterController {
             @RequestParam (required = false) Long fosterUserId,
             @RequestParam (required = false) FosterStatus status,
             @RequestParam (required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam (required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        ResponseDto<List<FosterListRes>> response = fosterService.getFosterList(principal, fosterUserId, status, from, to);
+        ResponseDto<List<FosterListRes>> response = fosterService.getFosterList(principal, fosterUserId, status, startDate, endDate);
         return ResponseEntity.ok().body(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     @GetMapping(FosterApi.BY_ID)
     public ResponseEntity<ResponseDto<FosterDetailRes>> getFosterDetail(
-            @PathVariable("fosterId") @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId,
-            @AuthenticationPrincipal UserPrincipal principal
+            @AuthenticationPrincipal UserPrincipal principal,
+            @PathVariable("fosterId") @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId
     ) {
-        ResponseDto<FosterDetailRes> response = fosterService.getFosterDetail(fosterId, principal);
+        ResponseDto<FosterDetailRes> response = fosterService.getFosterDetail(principal, fosterId);
         return ResponseEntity.ok().body(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     @PutMapping(FosterApi.CLOSE)
     public ResponseEntity<ResponseDto<Void>> closeFoster(
-            @PathVariable("fosterId") @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId,
             @AuthenticationPrincipal UserPrincipal principal,
+            @PathVariable("fosterId") @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId,
             @Valid @RequestBody FosterCloseReq req
     ) {
-        ResponseDto<Void> response = fosterService.closeFoster(fosterId, principal, req);
+        ResponseDto<Void> response = fosterService.closeFoster(principal,fosterId, req);
         return ResponseEntity.ok().body(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     @PutMapping(FosterApi.CANCEL)
     public ResponseEntity<ResponseDto<Void>> cancelFoster(
-            @PathVariable("fosterId") @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId,
             @AuthenticationPrincipal UserPrincipal principal,
+            @PathVariable("fosterId") @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId,
             @Valid @RequestBody FosterCancelReq req
     ) {
-        ResponseDto<Void> response = fosterService.cancelFoster(fosterId, principal, req);
+        ResponseDto<Void> response = fosterService.cancelFoster(principal, fosterId, req);
         return ResponseEntity.ok().body(response);
     }
 }

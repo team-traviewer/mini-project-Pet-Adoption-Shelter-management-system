@@ -2,13 +2,11 @@ package org.example.miniprojpetadoptionshelter.repository.fromAnimal;
 
 import org.example.miniprojpetadoptionshelter.common.enums.FosterStatus;
 import org.example.miniprojpetadoptionshelter.entity.fromAnimal.Foster;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
-public interface FosterRepository extends JpaRepository<Foster, Long>, FosterRepositoryCustom{
+public interface FosterRepositoryCustom {
+    List<Foster> searchFosters(Long fosterUserId, FosterStatus status, LocalDate startDate, LocalDate endDate);
 
-    boolean existsByAnimalIdAndStatus(Long id, FosterStatus fosterStatus);
 }
