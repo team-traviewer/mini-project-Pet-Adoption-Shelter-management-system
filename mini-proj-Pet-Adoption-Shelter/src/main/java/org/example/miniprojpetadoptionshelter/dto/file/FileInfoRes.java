@@ -8,7 +8,7 @@ public record FileInfoRes (
         String storedName,
         String contentType,
         Long fileSize,
-        String fileUrl,
+        String filePath,
         LocalDateTime createdAt
 ) {
 }
