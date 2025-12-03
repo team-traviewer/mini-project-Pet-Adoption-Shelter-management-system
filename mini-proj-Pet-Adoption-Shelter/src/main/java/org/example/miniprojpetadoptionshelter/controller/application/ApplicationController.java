@@ -48,8 +48,7 @@ public class ApplicationController {
     @PreAuthorize("hasAnyRole('USER', 'STAFF', 'ADMIN')")
     @GetMapping(ApplicationApi.ROOT)
     public ResponseEntity<ResponseDto<List<ApplicationListRes>>> getApplications(
-            @AuthenticationPrincipal User principal,
-
+            @AuthenticationPrincipal UserPrincipal principal,
             @RequestParam(required = false) Long animalId,
             @RequestParam(required = false) Long applicantId,
             @RequestParam(required = false)ApplicationStatus status,
@@ -66,9 +65,8 @@ public class ApplicationController {
     @PreAuthorize("hasAnyRole('USER', 'STAFF', 'ADMIN')")
     @GetMapping(ApplicationApi.BY_ID)
     public ResponseEntity<ResponseDto<ApplicationDetailRes>> getApplicationById(
-            @AuthenticationPrincipal User principal,
+            @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable("applicationId") @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId
-
     ) {
         ResponseDto<ApplicationDetailRes> response = applicationService.getApplicationById(principal, applicationId);
         return ResponseEntity.ok().body(response);
@@ -77,47 +75,47 @@ public class ApplicationController {
     // 4) 입양 신청 심사 취소 (APPLIED -> CANCELED)
     @PreAuthorize("hasAnyRole('USER', 'STAFF', 'ADMIN')")
     @PutMapping(ApplicationApi.CANCEL)
-    public ResponseEntity<ResponseDto<Void>> changeApplicationStatusToCanceledById(
-            @AuthenticationPrincipal User principal,
+    public ResponseEntity<ResponseDto<Void>> cancelApplicationById(
+            @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable("applicationId") @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId,
             @Valid @RequestBody ApplicationCancelReq req
     ) {
-        ResponseDto<Void> response = applicationService.changeApplicationStatusToCanceledById(principal, applicationId, req);
+        ResponseDto<Void> response = applicationService.cancelApplicationById(principal, applicationId, req);
         return ResponseEntity.ok().body(response);
     }
 
     // 5) 입양 신청 심사 시작 (APPLIED -> REVIEW)
     @PreAuthorize("hasRole('STAFF')")
     @PutMapping(ApplicationApi.REVIEW)
-    public ResponseEntity<ResponseDto<Void>> changeApplicationStatusToReviewById(
-            @AuthenticationPrincipal User principal,
+    public ResponseEntity<ResponseDto<Void>> reviewApplicationById(
+            @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable("applicationId") @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId,
             @Valid @RequestBody ApplicationUpdateReq req
     ) {
-        ResponseDto<Void> response = applicationService.changeApplicationStatusToReviewById(principal, applicationId, req);
+        ResponseDto<Void> response = applicationService.reviewApplicationById(principal, applicationId, req);
         return ResponseEntity.ok().body(response);
     }
 
     // 6) 입양 신청 심사 승인(REVIEW -> APPROVED)
     @PreAuthorize("hasRole('STAFF')")
     @PutMapping(ApplicationApi.APPROVE)
-    public ResponseEntity<ResponseDto<Void>> changeApplicationStatusToApprovedById(
-            @AuthenticationPrincipal User principal,
+    public ResponseEntity<ResponseDto<Void>> approveApplicationById(
+            @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable("applicationId") @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId
     ) {
-        ResponseDto<Void> response = applicationService.changeApplicationStatusToApprovedById(principal, applicationId);
+        ResponseDto<Void> response = applicationService.approveApplicationById(principal, applicationId);
         return ResponseEntity.ok().body(response);
     }
 
     // 7) 입양 신청 심사 거절(REVIEW -> REJECTED)
     @PreAuthorize("hasRole('STAFF')")
     @PutMapping(ApplicationApi.REJECT)
-    public ResponseEntity<ResponseDto<Void>> changeApplicationStatusToRejectedById(
-            @AuthenticationPrincipal User principal,
+    public ResponseEntity<ResponseDto<Void>> rejectApplicationById(
+            @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable("applicationId") @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId,
             @Valid @RequestBody ApplicationRejectReq req
     ) {
-        ResponseDto<Void> response = applicationService.changeApplicationStatusToRejectedById(principal, applicationId, req);
+        ResponseDto<Void> response = applicationService.rejectApplicationById(principal, applicationId, req);
         return ResponseEntity.ok().body(response);
     }
 }
