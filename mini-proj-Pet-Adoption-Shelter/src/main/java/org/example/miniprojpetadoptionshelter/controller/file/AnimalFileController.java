@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.miniprojpetadoptionshelter.common.apis.animal.AnimalFileApi;
 import org.example.miniprojpetadoptionshelter.common.apis.file.FileApi;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
+import org.example.miniprojpetadoptionshelter.dto.animal.AnimalFileListDto;
 import org.example.miniprojpetadoptionshelter.dto.animal.request.AnimalImgUpdateReq;
 import org.example.miniprojpetadoptionshelter.service.file.AnimalFileService;
 import org.springframework.http.HttpStatus;

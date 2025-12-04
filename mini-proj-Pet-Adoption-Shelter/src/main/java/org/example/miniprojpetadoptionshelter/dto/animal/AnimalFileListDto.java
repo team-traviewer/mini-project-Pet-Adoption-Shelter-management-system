@@ -1,23 +1,22 @@
-package org.example.miniprojpetadoptionshelter.dto.file;
+package org.example.miniprojpetadoptionshelter.dto.animal;
 
+import org.example.miniprojpetadoptionshelter.dto.file.FileListDto;
 import org.example.miniprojpetadoptionshelter.entity.file.FileInfo;
 
-public record FileListDto(
+public record AnimalFileListDto(
         Long fileId,
         String originalName,
         String storedName,
         String contentType,
-        Long fileSize,
-        String downloadUrl
+        Long fileSize
 ) {
-    public static FileListDto fromEntity(FileInfo fileInfo, String baseDownLoadUrl) {
+    public static AnimalFileListDto fromEntity(FileInfo fileInfo) {
         if (fileInfo == null) return null;
-        return new FileListDto(
+        return new AnimalFileListDto(
                 fileInfo.getId(),
                 fileInfo.getOriginalName(),
                 fileInfo.getStoredName(),
                 fileInfo.getContentType(),
-                fileInfo.getFileSize(),
-                baseDownLoadUrl + fileInfo.getId());
+                fileInfo.getFileSize());
     }
 }

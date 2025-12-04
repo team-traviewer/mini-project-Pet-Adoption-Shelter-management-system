@@ -41,4 +41,5 @@ public class FileInfo {
         this.fileSize = fileSize;
         this.filePath = filePath;
     }
+
 }
