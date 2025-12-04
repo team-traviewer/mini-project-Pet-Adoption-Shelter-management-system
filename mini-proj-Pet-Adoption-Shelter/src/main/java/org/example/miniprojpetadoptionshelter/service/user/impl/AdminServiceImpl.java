@@ -1,5 +1,6 @@
 package org.example.miniprojpetadoptionshelter.service.user.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.admin.request.GrantRoleRequest;
 import org.example.miniprojpetadoptionshelter.dto.admin.response.RoleListResponse;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
     @Override
