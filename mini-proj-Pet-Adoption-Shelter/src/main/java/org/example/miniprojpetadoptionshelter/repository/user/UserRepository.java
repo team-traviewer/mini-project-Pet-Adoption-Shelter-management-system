@@ -1,6 +1,8 @@
 package org.example.miniprojpetadoptionshelter.repository.user;
 
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.example.miniprojpetadoptionshelter.common.enums.AuthProvider;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +26,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 """)
     Optional<User> findWithRolesByLoginId(@Param("loginId") String loginId);
+
+    Optional<User> findByEmail(@NotBlank(message = "이메일은 필수입니다.") @Email(message = "이메일 형식이 올바르지 않습니다.") String email);
 }
