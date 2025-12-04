@@ -66,10 +66,11 @@ public class Foster{
     private LocalDateTime createdAt;
 
     @Builder
-    public Foster(Animal animal, User fosterUser, LocalDate startDate){
+    public Foster(Animal animal, User fosterUser, LocalDate startDate, String note){
         this.animal = animal;
         this.fosterUser = fosterUser;
         this.startDate = startDate;
+        this.note = note;
     }
 
     // 임시보호 종료

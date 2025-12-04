@@ -17,9 +17,9 @@ import java.util.List;
 @Service
 public interface FosterService {
     ResponseDto<Void> createFoster(UserPrincipal principal, FosterCreateReq req);
-    ResponseDto<List<FosterListRes>> getFosterList(UserPrincipal principal, Long fosterUserId, FosterStatus status, LocalDate from, LocalDate to);
-    ResponseDto<FosterDetailRes> getFosterDetail(@Positive(message = "Id는 1이상이어야 합니다.") Long fosterId, UserPrincipal principal);
+    ResponseDto<List<FosterListRes>> getFosterList(UserPrincipal principal, Long fosterUserId, FosterStatus status, LocalDate startDate, LocalDate endDate);
+    ResponseDto<FosterDetailRes> getFosterDetail( UserPrincipal principal, @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId);
 
-    ResponseDto<Void> closeFoster(@Positive(message = "Id는 1이상이어야 합니다.") Long fosterId, UserPrincipal principal, FosterCloseReq req);
-    ResponseDto<Void> cancelFoster(@Positive(message = "Id는 1이상이어야 합니다.") Long fosterId, UserPrincipal principal, FosterCancelReq req);
+    ResponseDto<Void> closeFoster(UserPrincipal principal, @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId,  FosterCloseReq req);
+    ResponseDto<Void> cancelFoster(UserPrincipal principal, @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId, FosterCancelReq req);
 }
