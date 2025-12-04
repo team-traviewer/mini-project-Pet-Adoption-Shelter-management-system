@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.miniprojpetadoptionshelter.common.enums.AuthProvider;
 import org.example.miniprojpetadoptionshelter.common.enums.RoleType;
+import org.example.miniprojpetadoptionshelter.entity.file.FileInfo;
 import org.example.miniprojpetadoptionshelter.entity.user.Role;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.example.miniprojpetadoptionshelter.repository.user.RoleRepository;
@@ -68,6 +69,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String email = userInfo.getEmail();
         String name = userInfo.getName();
         String phone = userInfo.getPhone();
+
 
         return userRepository.findByProviderAndProviderId(provider, providerId)
                 .map(user -> {

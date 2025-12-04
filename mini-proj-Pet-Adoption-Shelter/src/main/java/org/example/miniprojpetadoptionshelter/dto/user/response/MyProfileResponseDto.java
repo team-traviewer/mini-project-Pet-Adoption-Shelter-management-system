@@ -14,7 +14,7 @@ public record MyProfileResponseDto(
         FileInfo profileFile,
         LocalDateTime createdAt
 ) {
-    public MyProfileResponseDto from(User user) {
+    public static MyProfileResponseDto from(User user) {
         return new MyProfileResponseDto(
                 user.getName(),
                 user.getEmail(),

@@ -1,14 +1,13 @@
 package org.example.miniprojpetadoptionshelter.controller.auth;
 
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.miniprojpetadoptionshelter.common.apis.auth.AuthApi;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
-import org.example.miniprojpetadoptionshelter.dto.auth.request.LoginRequestDto;
-import org.example.miniprojpetadoptionshelter.dto.auth.request.LogoutRequestDto;
-import org.example.miniprojpetadoptionshelter.dto.auth.request.PasswordResetRequestDto;
-import org.example.miniprojpetadoptionshelter.dto.auth.request.RefreshRequestDto;
+import org.example.miniprojpetadoptionshelter.dto.auth.request.*;
 import org.example.miniprojpetadoptionshelter.dto.auth.response.LoginResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.auth.response.PasswordVerifyResponseDto;
 import org.example.miniprojpetadoptionshelter.dto.auth.response.SignupResponseDto;
@@ -28,7 +27,7 @@ public class AuthController {
     // 회원가입
     @PostMapping(AuthApi.SIGNUP)
     public ResponseEntity<ResponseDto<SignupResponseDto>> signup(
-            @Valid @RequestBody SignupResponseDto request
+            @Valid @RequestBody SignupRequestDto request
     ) {
         ResponseDto<SignupResponseDto> response = authService.signup(request);
         return ResponseEntity.status(response.getStatus()).body(response);
@@ -37,32 +36,32 @@ public class AuthController {
     // 로그인
     @PostMapping(AuthApi.LOGIN)
     public ResponseEntity<ResponseDto<LoginResponseDto>> login(
-            @Valid @RequestBody LoginRequestDto request
+            @Valid @RequestBody LoginRequestDto request,
+            HttpServletResponse response
     ) {
-        ResponseDto<LoginResponseDto> response = authService.login(request);
-        return ResponseEntity.status(response.getStatus()).body(response);
+        ResponseDto<LoginResponseDto> result = authService.login(request, response);
+        return ResponseEntity.status(response.getStatus()).body(result);
     }
 
     // 로그아웃
     @PreAuthorize("hasAnyRole('USER','STAFF','ADMIN')")
     @PostMapping(AuthApi.LOGOUT)
     public ResponseEntity<ResponseDto<Void>> logout(
-            @Valid @RequestBody LogoutRequestDto request,
+            HttpServletResponse response,
             @AuthenticationPrincipal UserPrincipal principal
             ) {
-        ResponseDto<Void> response = authService.logout(request, principal);
-        return ResponseEntity.status(response.getStatus()).body(response);
+        ResponseDto<Void> result = authService.logout(response, principal);
+        return ResponseEntity.status(response.getStatus()).body(result);
     }
 
     // 토큰 재발급
-    @PreAuthorize("hasAnyRole('USER','STAFF','ADMIN')")
     @PostMapping(AuthApi.REFRESH)
     public ResponseEntity<ResponseDto<LoginResponseDto>> refresh(
-            @Valid @RequestBody RefreshRequestDto request,
-            @AuthenticationPrincipal UserPrincipal principal
+            HttpServletRequest request,
+            HttpServletResponse response
     ) {
-       ResponseDto<LoginResponseDto> response = authService.refresh(request, principal);
-       return ResponseEntity.status(response.getStatus()).body(response);
+       ResponseDto<LoginResponseDto> result = authService.refresh(request, response);
+       return ResponseEntity.status(response.getStatus()).body(result);
     }
 
     // 비밀번호 재설정
@@ -77,13 +76,11 @@ public class AuthController {
     }
 
     // 비밀번호 재설정 토큰 유효성 확인
-    @PreAuthorize("hasAnyRole('USER','STAFF','ADMIN')")
     @PostMapping(AuthApi.VERIFY)
     public ResponseEntity<ResponseDto<PasswordVerifyResponseDto>> verify(
-            @RequestParam("token") String token,
-            @AuthenticationPrincipal UserPrincipal principal
+            @RequestParam("token") String token
     ) {
-        ResponseDto<PasswordVerifyResponseDto> response = authService.verify(token, principal);
+        ResponseDto<PasswordVerifyResponseDto> response = authService.verify(token);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

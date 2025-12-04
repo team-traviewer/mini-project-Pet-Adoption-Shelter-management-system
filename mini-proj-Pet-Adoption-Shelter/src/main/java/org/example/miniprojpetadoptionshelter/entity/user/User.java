@@ -123,6 +123,10 @@ public class User extends BaseTimeEntity {
         this.phone = phone;
     }
 
+    public void changeProfileFile(FileInfo profileFile) {
+        this.profileFile = profileFile;
+    }
+
     public void grantRole(Role role) {
         boolean exists = userRoles.stream()
                 .anyMatch(userRole -> userRole.getRole().equals(role));
