@@ -58,10 +58,10 @@ public class ApplicationServiceImpl implements ApplicationService {
         Animal animal = animalRepository.findById(req.animalId())
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않은 동물입니다."));
 
-        ByAnimalStatus animalStatus = animal.getStatus();
-        if (animalStatus != ByAnimalStatus.AVAILABLE ) {
-            throw new IllegalStateException("해당 동물은 입양 신청 가능상태가 아닙니다.");
-        }
+//        ByAnimalStatus animalStatus = animal.getStatus();
+//        if (animalStatus != ByAnimalStatus.AVAILABLE ) {
+//            throw new IllegalStateException("해당 동물은 입양 신청 가능상태가 아닙니다.");
+//        }
 
         Application application = Application.builder()
                 .applicant(user)
@@ -207,7 +207,8 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
 
         application.approve();
-        application.
+
+        /** 여기에 파일 추가하는거 ? */
         return ResponseDto.success("SUCCESS", null);
     }
 
