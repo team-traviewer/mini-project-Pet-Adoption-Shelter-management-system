@@ -14,15 +14,16 @@ import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ApplicationService {
     ResponseDto<Void> createApplication(UserPrincipal principal, @Valid ApplicationCreateReq req);
-    ResponseDto<List<ApplicationListRes>> getApplications(UserPrincipal principal, Long animalId, Long applicantId, ApplicationStatus status, LocalDate from, LocalDate to);
+    ResponseDto<ApplicationListRes.PageResponse> getApplications(UserPrincipal principal, int page, int size, String[] sort, Long animalId, Long applicantId, ApplicationStatus status, LocalDateTime from, LocalDateTime to);
     ResponseDto<ApplicationDetailRes> getApplicationById(UserPrincipal principal, @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId);
 
-    ResponseDto<Void> cancelApplicationById(UserPrincipal principal, @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId, @Valid ApplicationCancelReq req);
     ResponseDto<Void> reviewApplicationById(UserPrincipal principal, @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId, @Valid ApplicationUpdateReq req);
     ResponseDto<Void> approveApplicationById(UserPrincipal principal, @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId);
     ResponseDto<Void> rejectApplicationById(UserPrincipal principal, @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId, @Valid ApplicationRejectReq req);
+    ResponseDto<Void> cancelApplicationById(UserPrincipal principal, @Positive(message = "Id는 1이상이어야 합니다.") Long applicationId, @Valid ApplicationCancelReq req);
 }

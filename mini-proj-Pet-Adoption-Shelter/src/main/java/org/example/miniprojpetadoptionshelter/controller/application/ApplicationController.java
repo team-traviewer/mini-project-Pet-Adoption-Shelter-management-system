@@ -1,6 +1,8 @@
 package org.example.miniprojpetadoptionshelter.controller.application;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.example.miniprojpetadoptionshelter.common.apis.application.ApplicationApi;
@@ -12,8 +14,6 @@ import org.example.miniprojpetadoptionshelter.dto.application.request.Applicatio
 import org.example.miniprojpetadoptionshelter.dto.application.request.ApplicationUpdateReq;
 import org.example.miniprojpetadoptionshelter.dto.application.response.ApplicationDetailRes;
 import org.example.miniprojpetadoptionshelter.dto.application.response.ApplicationListRes;
-import org.example.miniprojpetadoptionshelter.entity.application.Application;
-import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 import org.example.miniprojpetadoptionshelter.service.application.ApplicationService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,6 +25,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -47,17 +48,20 @@ public class ApplicationController {
     // 2) 입양 신청 조회 (전체 조회)
     @PreAuthorize("hasAnyRole('USER', 'STAFF', 'ADMIN')")
     @GetMapping(ApplicationApi.ROOT)
-    public ResponseEntity<ResponseDto<List<ApplicationListRes>>> getApplications(
+    public ResponseEntity<ResponseDto<ApplicationListRes.PageResponse>> getApplications(
             @AuthenticationPrincipal UserPrincipal principal,
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size,
+            @RequestParam(required = false) String[] sort,
             @RequestParam(required = false) Long animalId,
             @RequestParam(required = false) Long applicantId,
             @RequestParam(required = false)ApplicationStatus status,
             @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate from,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
             @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate to
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to
     ) {
-        ResponseDto<List<ApplicationListRes>> response = applicationService.getApplications(principal, animalId, applicantId, status, from, to);
+        ResponseDto<ApplicationListRes.PageResponse> response = applicationService.getApplications(principal, page, size, sort, animalId, applicantId, status, from, to);
         return ResponseEntity.ok().body(response);
     }
 

@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface FosterRepositoryCustom {
     List<Foster> searchFosters(Long fosterUserId, FosterStatus status, LocalDate startDate, LocalDate endDate);
-
 }

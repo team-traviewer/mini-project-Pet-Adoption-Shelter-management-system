@@ -28,7 +28,7 @@ public record ApplicationDetailRes(
                 application.getAnimal().getSpecies(),
                 application.getStatus(),
                 application.getMessage(),
-                application.getUser().getName(),
+                application.getApplicant().getName(),
                 application.getInterviewAt(),
                 application.isHomeCheck(),
                 application.getReason(),
