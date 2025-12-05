@@ -44,7 +44,7 @@ public class FosterController {
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     @GetMapping(FosterApi.ROOT)
-    public ResponseEntity<ResponseDto<FosterListRes.PageResponse>> getFosterList(
+    public ResponseEntity<ResponseDto<FosterListRes.PageResponse>> getFosters(
             @AuthenticationPrincipal UserPrincipal principal,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size,
@@ -57,17 +57,17 @@ public class FosterController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
 
     ) {
-        ResponseDto<FosterListRes.PageResponse> response = fosterService.getFosterList(principal, page, size, sort,  fosterUserId, status, startDate, endDate);
+        ResponseDto<FosterListRes.PageResponse> response = fosterService.getFosters(principal, page, size, sort,  fosterUserId, status, startDate, endDate);
         return ResponseEntity.ok().body(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     @GetMapping(FosterApi.BY_ID)
-    public ResponseEntity<ResponseDto<FosterDetailRes>> getFosterDetail(
+    public ResponseEntity<ResponseDto<FosterDetailRes>> getFosterById(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable("fosterId") @Positive(message = "Id는 1이상이어야 합니다.") Long fosterId
     ) {
-        ResponseDto<FosterDetailRes> response = fosterService.getFosterDetail(principal, fosterId);
+        ResponseDto<FosterDetailRes> response = fosterService.getFosterById(principal, fosterId);
         return ResponseEntity.ok().body(response);
     }
 
