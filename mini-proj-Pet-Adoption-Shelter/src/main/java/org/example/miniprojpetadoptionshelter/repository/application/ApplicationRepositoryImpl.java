@@ -66,15 +66,15 @@ public class ApplicationRepositoryImpl implements ApplicationRepositoryCustom{
         }
 
         if (toUtc != null) {
-            jpql.append(" AND a.createdAt >= :toUtc");
-            countJpql.append(" AND a.createdAt >= :toUtc");
+            jpql.append(" AND a.createdAt <= :toUtc");
+            countJpql.append(" AND a.createdAt <= :toUtc");
             params.put("toUtc", toUtc);
         }
 
         // 정렬
         Sort sort = pageable.getSort();
         if (sort.isSorted()){
-            jpql.append(" ORDER BY");
+            jpql.append(" ORDER BY ");
             List<String> order = new ArrayList<>();
 
             for (Sort.Order o : sort) {

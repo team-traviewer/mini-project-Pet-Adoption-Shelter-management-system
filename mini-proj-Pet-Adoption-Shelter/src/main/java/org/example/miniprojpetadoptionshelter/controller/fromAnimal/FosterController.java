@@ -1,6 +1,8 @@
 package org.example.miniprojpetadoptionshelter.controller.fromAnimal;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.example.miniprojpetadoptionshelter.common.apis.fromAnimal.FosterApi;
@@ -42,16 +44,20 @@ public class FosterController {
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     @GetMapping(FosterApi.ROOT)
-    public ResponseEntity<ResponseDto<List<FosterListRes>>> getFosterList(
+    public ResponseEntity<ResponseDto<FosterListRes.PageResponse>> getFosterList(
             @AuthenticationPrincipal UserPrincipal principal,
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size,
+            @RequestParam(required = false) String[] sort,
             @RequestParam (required = false) Long fosterUserId,
             @RequestParam (required = false) FosterStatus status,
             @RequestParam (required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam (required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+
     ) {
-        ResponseDto<List<FosterListRes>> response = fosterService.getFosterList(principal, fosterUserId, status, startDate, endDate);
+        ResponseDto<FosterListRes.PageResponse> response = fosterService.getFosterList(principal, page, size, sort,  fosterUserId, status, startDate, endDate);
         return ResponseEntity.ok().body(response);
     }
 
