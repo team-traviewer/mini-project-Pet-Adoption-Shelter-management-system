@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.miniprojpetadoptionshelter.common.enums.ApplicationStatus;
+import org.example.miniprojpetadoptionshelter.common.enums.ByAnimalStatus;
+import org.example.miniprojpetadoptionshelter.entity.file.FileInfo;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
 import org.example.miniprojpetadoptionshelter.entity.base.BaseTimeEntity;
@@ -38,14 +40,19 @@ public class Application extends BaseTimeEntity {
     /** FK */
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_id", nullable = false, foreignKey = @ForeignKey(name = "fk_applications_animals"))
-    private Animal animal;
+    @JoinColumn(name = "applicant_id", nullable = false, foreignKey = @ForeignKey(name = "fk_applications_users"))
+    private User applicant;
 
     /** FK */
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "applicant_id", nullable = false, foreignKey = @ForeignKey(name = "fk_applications_users"))
-    private User user;
+    @JoinColumn(name = "animal_id", nullable = false, foreignKey = @ForeignKey(name = "fk_applications_animals"))
+    private Animal animal;
+
+    /** FK */
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "application_file_id", foreignKey = @ForeignKey(name = "fk_applications_file_infos"))
+    private FileInfo applicationFile;
 
     /** 심사 상태 */
     @Enumerated(EnumType.STRING)
@@ -58,7 +65,7 @@ public class Application extends BaseTimeEntity {
 
     /** 가정방문 확인 */
     @Column(name = "home_check", nullable = false)
-    private boolean homeCheck; // 기본값 false
+    private boolean homeCheck;
 
     /** 자기소개, 메모 */
     @Lob
@@ -68,20 +75,19 @@ public class Application extends BaseTimeEntity {
 
     /** 거절 이유 */
     @Column(name = "reason", length = 100)
-    private String reason; // 기본값 null
+    private String reason;
+
+    /** 파일 편의 메서드 */
+    public void attachDocumentFile(FileInfo fileInfo) {
+        this.applicationFile = fileInfo;
+    }
 
     /** 입양 신청 시 생성자*/
     @Builder
-    public Application(Animal animal, User user, String message) {
+    public Application(User applicant, Animal animal, String message) {
+        this.applicant = applicant;
         this.animal = animal;
-        this.user = user;
         this.message = message;
-    }
-
-    /** APPLIED -> CANCEL 변경 */
-    public void cancel(String reason) {
-        this.status = ApplicationStatus.CANCELED;
-        this.reason = reason;
     }
 
     /** APPLIED -> REVIEW 변경 */
@@ -89,20 +95,27 @@ public class Application extends BaseTimeEntity {
         this.status = ApplicationStatus.REVIEW;
     }
 
-    /** REVIEW 일 때만 정보 수정 변경 */
+    /** REVIEW 일 때 정보 수정 변경 */
     public void updateApplicationInfo(LocalDateTime interviewAt, boolean homeCheck) {
         this.interviewAt = interviewAt;
         this.homeCheck = homeCheck;
     }
 
-    /** REVIEW -> APPROVED 변경*/
+    /** REVIEW -> APPROVED 변경 */
     public void approve() {
         this.status = ApplicationStatus.APPROVED;
+        this.animal.setStatus(ByAnimalStatus.ADOPTION_PENDING);
     }
 
-    /** REVIEW -> REJECTED 변경*/
+    /** REVIEW -> REJECTED 변경 */
     public void reject(String reason) {
         this.status = ApplicationStatus.REJECTED;
+        this.reason = reason;
+    }
+
+    /** REVIEW -> CANCEL 변경 */
+    public void cancel(String reason) {
+        this.status = ApplicationStatus.CANCELED;
         this.reason = reason;
     }
 }
