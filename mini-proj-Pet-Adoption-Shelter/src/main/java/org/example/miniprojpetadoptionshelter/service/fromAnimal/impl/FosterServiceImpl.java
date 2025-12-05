@@ -1,20 +1,16 @@
 package org.example.miniprojpetadoptionshelter.service.fromAnimal.impl;
 
-import com.mysql.cj.conf.StringProperty;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.miniprojpetadoptionshelter.common.enums.FosterStatus;
-import org.example.miniprojpetadoptionshelter.common.utils.DateUtils;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
-import org.example.miniprojpetadoptionshelter.dto.application.response.ApplicationListRes;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.request.FosterCancelReq;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.request.FosterCloseReq;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.request.FosterCreateReq;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.response.FosterDetailRes;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.foster.response.FosterListRes;
 import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
-import org.example.miniprojpetadoptionshelter.entity.application.Application;
 import org.example.miniprojpetadoptionshelter.entity.fromAnimal.Foster;
 import org.example.miniprojpetadoptionshelter.entity.user.User;
 import org.example.miniprojpetadoptionshelter.repository.animal.AnimalRepository;
@@ -36,7 +32,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class FosterServiceImpl implements FosterService {
 
@@ -117,7 +113,7 @@ public class FosterServiceImpl implements FosterService {
     }
 
     @Override
-    public ResponseDto<FosterDetailRes> getFosterDetail(UserPrincipal principal, Long fosterId) {
+    public ResponseDto<FosterDetailRes> getFosterById(UserPrincipal principal, Long fosterId) {
         FosterDetailRes data = null;
 
         if (!isStaffOrAdmin(principal)) {

@@ -3,6 +3,7 @@ package org.example.miniprojpetadoptionshelter.entity.fromAnimal;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.miniprojpetadoptionshelter.common.enums.ByAnimalStatus;
 import org.example.miniprojpetadoptionshelter.common.enums.FosterStatus;
 import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
 import org.example.miniprojpetadoptionshelter.entity.base.BaseTimeEntity;
@@ -83,5 +84,6 @@ public class Foster{
     public void cancelFoster(String note) {
         this.note = note;
         this.status = FosterStatus.CANCELED;
+        this.animal.setStatus(ByAnimalStatus.AVAILABLE);
     }
 }
