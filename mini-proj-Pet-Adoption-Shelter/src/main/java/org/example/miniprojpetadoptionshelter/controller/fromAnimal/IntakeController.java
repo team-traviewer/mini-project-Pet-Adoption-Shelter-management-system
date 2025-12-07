@@ -7,6 +7,7 @@ import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.request.Inta
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.request.IntakeUpdateReq;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.response.IntakeDetailRes;
 import org.example.miniprojpetadoptionshelter.dto.fromAnimal.intake.response.IntakeListRes;
+import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
 import org.example.miniprojpetadoptionshelter.security.user.UserPrincipal;
 import org.example.miniprojpetadoptionshelter.service.fromAnimal.IntakeService;
 import org.springframework.http.HttpStatus;
@@ -23,43 +24,39 @@ public class IntakeController {
 
     private final IntakeService intakeService;
 
-    @PreAuthorize("hasRole('STAFF')")
+    @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     @PostMapping(IntakeApi.INTAKE_ANIMAL)
     public ResponseEntity<ResponseDto<Void>> createIntake(
-            @RequestBody IntakeCreateReq req,
-            @AuthenticationPrincipal UserPrincipal principal
+            @PathVariable Long animalId,
+            @RequestBody IntakeCreateReq request
             ) {
-        ResponseDto<Void> response = intakeService.createIntake(req, principal);
+        ResponseDto<Void> response = intakeService.createIntake(animalId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     @GetMapping(IntakeApi.INTAKE_ANIMAL)
-    public ResponseEntity<ResponseDto<List<IntakeListRes>>> getIntakeList(
-            @RequestParam Long animalId,
-            @AuthenticationPrincipal UserPrincipal principal
-    ) {
-        ResponseDto<List<IntakeListRes>> response = intakeService.getIntakeList(animalId, principal);
+    public ResponseEntity<ResponseDto<List<IntakeListRes>>> getIntakeList() {
+        ResponseDto<List<IntakeListRes>> response = intakeService.getIntakeList();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     @GetMapping(IntakeApi.BY_ID)
     public ResponseEntity<ResponseDto<IntakeDetailRes>> getIntakeDetail(
-            @PathVariable Long id,
-            @AuthenticationPrincipal UserPrincipal principal
+            @PathVariable Long id
     ) {
-        ResponseDto<IntakeDetailRes> response = intakeService.getIntakeDetail(id, principal);
+        ResponseDto<IntakeDetailRes> response = intakeService.getIntakeDetail(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     @PutMapping(IntakeApi.BY_ID)
     public ResponseEntity<ResponseDto<Void>> updateIntake(
-            @PathVariable Long id, @RequestBody IntakeUpdateReq req,
+            @PathVariable Long id, @RequestBody IntakeUpdateReq request,
             @AuthenticationPrincipal UserPrincipal principal
     ) {
-        ResponseDto<Void> response = intakeService.updateIntake(id, req, principal);
+        ResponseDto<Void> response = intakeService.updateIntake(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

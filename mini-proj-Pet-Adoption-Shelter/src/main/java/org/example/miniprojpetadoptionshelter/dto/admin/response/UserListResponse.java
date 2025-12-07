@@ -9,7 +9,7 @@ public record UserListResponse(
     String name,
     LocalDateTime createdAt
 ) {
-    public UserListResponse from(User user) {
+    public static UserListResponse from(User user) {
         return new UserListResponse(
                 user.getLoginId(),
                 user.getName(),

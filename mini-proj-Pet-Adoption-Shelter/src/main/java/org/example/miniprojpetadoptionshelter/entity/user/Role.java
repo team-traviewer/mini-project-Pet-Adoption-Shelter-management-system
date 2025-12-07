@@ -12,6 +12,9 @@ import org.example.miniprojpetadoptionshelter.common.enums.RoleType;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Role {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "role_name")
     private RoleType roleName;
 

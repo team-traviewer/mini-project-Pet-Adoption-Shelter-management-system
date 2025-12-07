@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.miniprojpetadoptionshelter.common.apis.auth.AdminApi;
 import org.example.miniprojpetadoptionshelter.common.apis.user.RoleApi;
 import org.example.miniprojpetadoptionshelter.dto.ResponseDto;
-import org.example.miniprojpetadoptionshelter.dto.admin.request.GrantRoleRequest;
+import org.example.miniprojpetadoptionshelter.dto.admin.request.RoleModifyRequest;
 import org.example.miniprojpetadoptionshelter.dto.admin.response.RoleListResponse;
 import org.example.miniprojpetadoptionshelter.dto.admin.response.UserListResponse;
 import org.example.miniprojpetadoptionshelter.dto.admin.response.UserProfileResponse;
@@ -26,32 +26,29 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(RoleApi.BY_ID)
     public ResponseEntity<List<ResponseDto<RoleListResponse>>> getAllRole(
-            @RequestParam("userId") String userId,
-            @AuthenticationPrincipal UserPrincipal principal
+            @PathVariable("userId") Long userId
     ) {
-        List<ResponseDto<RoleListResponse>> response = adminService.getAllRole(userId, principal);
+        List<ResponseDto<RoleListResponse>> response = adminService.getAllRole(userId);
         return ResponseEntity.ok().body(response);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(RoleApi.BY_ID)
     public ResponseEntity<ResponseDto<Void>> grantRole(
-            @RequestParam("userId") String userId,
-            @Valid @RequestBody GrantRoleRequest request,
-            @AuthenticationPrincipal UserPrincipal principal
+            @PathVariable("userId") Long userId,
+            @Valid @RequestBody RoleModifyRequest request
             ) {
-        ResponseDto<Void> response = adminService.grantRole(userId, request, principal);
+        ResponseDto<Void> response = adminService.grantRole(userId, request);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(RoleApi.BY_ID_ROLE)
     public ResponseEntity<ResponseDto<Void>> revokeRole(
-            @RequestParam("userId") String userId,
-            @RequestParam("roleName") String roleName,
-            @AuthenticationPrincipal UserPrincipal principal
+            @PathVariable("userId") Long userId,
+            @Valid @RequestBody RoleModifyRequest request
     ) {
-        ResponseDto<Void> response = adminService.revokeRole(userId, roleName, principal);
+        ResponseDto<Void> response = adminService.revokeRole(userId, request);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
@@ -67,10 +64,9 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(AdminApi.BY_ID)
     public ResponseEntity<ResponseDto<UserProfileResponse>> getUserProfile(
-            @RequestParam("userId") String userId,
-            @AuthenticationPrincipal UserPrincipal principal
+            @PathVariable("userId") Long userId
     ) {
-        ResponseDto<UserProfileResponse> response = adminService.getUserProfile(userId, principal);
+        ResponseDto<UserProfileResponse> response = adminService.getUserProfile(userId);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

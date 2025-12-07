@@ -16,7 +16,7 @@ public record UserProfileResponse(
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
-    public UserProfileResponse from(User user) {
+    public static UserProfileResponse from(User user) {
         return new UserProfileResponse(
                 user.getLoginId(),
                 user.getName(),

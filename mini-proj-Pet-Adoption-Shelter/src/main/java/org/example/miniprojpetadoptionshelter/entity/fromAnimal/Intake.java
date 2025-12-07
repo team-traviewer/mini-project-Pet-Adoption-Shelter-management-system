@@ -8,6 +8,7 @@ import org.example.miniprojpetadoptionshelter.entity.animal.Animal;
 import org.example.miniprojpetadoptionshelter.entity.base.BaseTimeEntity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -32,7 +33,7 @@ public class Intake extends BaseTimeEntity {
     private Animal animal;
 
     @Column(name = "intake_date", nullable = false)
-    private LocalDate intakeDate;
+    private LocalDateTime intakeDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "intake_reason", nullable = false, length = 100)
@@ -55,10 +56,17 @@ public class Intake extends BaseTimeEntity {
         this.intakeReason = IntakeReason.TRANSFER;
     }
 
+    public void intakeUpdate(LocalDateTime intakeDate, IntakeReason intakeReason, String foundLocation, String note) {
+        this.intakeDate = intakeDate;
+        this.intakeReason = intakeReason;
+        this.foundLocation = foundLocation;
+        this.note = note;
+    }
+
     @Builder
     public Intake(
             Animal animal,
-            LocalDate intakeDate,
+            LocalDateTime intakeDate,
             IntakeReason intakeReason,
             String foundLocation,
             String note
