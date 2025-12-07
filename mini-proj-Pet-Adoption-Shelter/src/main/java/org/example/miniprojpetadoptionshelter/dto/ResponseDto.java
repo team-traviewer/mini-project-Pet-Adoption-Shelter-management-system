@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.miniprojpetadoptionshelter.common.enums.ErrorCode;
+import org.example.miniprojpetadoptionshelter.dto.adoption.response.AdoptionResponse;
+import org.springframework.http.HttpStatus;
 
 import java.time.Instant;
 
@@ -106,6 +108,17 @@ public class ResponseDto<T> {
                 .message(errorCode.getMessage())
                 .status(errorCode.getStatus().value())
                 .code(errorCode.getCode())
+                .timestamp(Instant.now())
+                .build();
+    }
+
+    public static <T> ResponseDto<T> ok(T data) {
+        return ResponseDto.<T>builder()
+                .success(true)
+                .data(data)                      // 너의 DTO 필드명이 data라면 이대로, 아니라면 필드명에 맞춰 변경
+                .message(null)                   // 메시지 없으면 null
+                .status(HttpStatus.OK.value())   // 200
+                .code("0")                       // 성공 코드 관례에 맞게 변경 가능
                 .timestamp(Instant.now())
                 .build();
     }
